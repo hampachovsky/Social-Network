@@ -9,7 +9,7 @@ const Profile = () => {
           alt=""
         />
       </div>
-      <div>ava + description</div>
+      <div>Ava + desc</div>
       <div>
         My posts
         <div>New post</div>
