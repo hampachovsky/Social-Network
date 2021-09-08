@@ -1,0 +1,10 @@
+.content {
+  grid: c;
+  grid-area: right;
+  padding-top: 100px;
+  top: 70px;
+  width: 95%;
+  position: absolute;
+  right: 0;
+  background-color: indianred;
+}
