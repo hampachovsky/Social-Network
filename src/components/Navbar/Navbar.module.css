@@ -1,0 +1,22 @@
+.sidebar {
+  grid: n;
+  position: fixed;
+  max-width: 70px;
+  height: 100%;
+  background-color: burlywood;
+}
+
+.nav {
+  padding-left: 20px;
+  padding-top: 100px;
+}
+
+.item {
+  color: white;
+}
+
+.sidebar img {
+  padding-left: 4px;
+  padding-top: 3px;
+  width: 60px;
+}
