@@ -11,27 +11,27 @@ const Navbar = () => {
 
       <nav className={style.nav}>
         <div>
-          <a className={style.item} href="#s">
+          <a className={style.item} href="/profile">
             Profile
           </a>
         </div>
         <div>
-          <a className={style.item} href="#d">
+          <a className={style.item} href="/messages">
             Messages
           </a>
         </div>
         <div>
-          <a className={style.item} href="#w">
+          <a className={style.item} href="/news">
             News
           </a>
         </div>
         <div>
-          <a className={style.item} href="#g">
+          <a className={style.item} href="/music">
             Music
           </a>
         </div>
         <div>
-          <a className={style.item} href="#set">
+          <a className={style.item} href="/settings">
             Settings
           </a>
         </div>
