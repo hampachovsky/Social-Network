@@ -1,9 +1,17 @@
 .sidebar {
-  grid: n;
+  /* grid: n;
   position: fixed;
-  max-width: 80px;
+  width: 85px;
+  max-width: 100px;
   height: 100%;
+  background-color: burlywood;*/
+  position: fixed;
   background-color: burlywood;
+  height: 100%;
+  width: 100px;
+  z-index: 100;
+  padding-bottom: 30px;
+  overflow: hidden;
 }
 
 .nav {
@@ -13,6 +21,11 @@
 
 .item {
   color: white;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: aqua;
 }
 
 .sidebar img {

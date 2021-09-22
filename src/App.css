@@ -8,12 +8,8 @@
 }
 
 .app-wrapper-content {
-  grid: c;
-  grid-area: right;
-  padding-top: 40px;
-  top: 70px;
-  width: 95%;
-  position: absolute;
-  right: 0;
-  background-color: indianred;
+  margin-left: 400px;
+  background-color: teal;
+  width: calc(100% - 100px); /* 300px*/
+  margin-bottom: 80px;
 }
