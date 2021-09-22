@@ -1,3 +1,7 @@
+body {
+  background-color: #f0f2f5;
+}
+
 .app-wrapper {
   display: grid;
   height: 100vh;
@@ -9,7 +13,7 @@
 
 .app-wrapper-content {
   margin-left: 400px;
-  background-color: teal;
+  background-color: #fff;
   width: calc(100% - 100px); /* 300px*/
   margin-bottom: 80px;
 }

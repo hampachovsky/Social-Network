@@ -1,0 +1,9 @@
+.listItem {
+  display: block;
+}
+
+.avaImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+}

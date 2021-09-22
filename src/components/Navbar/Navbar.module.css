@@ -6,7 +6,7 @@
   height: 100%;
   background-color: burlywood;*/
   position: fixed;
-  background-color: burlywood;
+  background-color: #fff;
   height: 100%;
   width: 100px;
   z-index: 100;
@@ -20,12 +20,12 @@
 }
 
 .item {
-  color: white;
+  color: #707070;
   text-decoration: none;
 }
 
 .activeLink {
-  color: aqua;
+  color: #be185d;
 }
 
 .sidebar img {
