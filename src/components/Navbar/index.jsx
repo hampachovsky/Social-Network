@@ -4,12 +4,13 @@ import style from './Navbar.module.css';
 
 const Navbar = () => {
   return (
-    <div className={style.sidebar}>
-      <img
-        src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4866092.jpg"
-        alt=""
-      />
-
+    <div className={`${style.sidebar} `}>
+      <div className="border-b border-gray-200 from-gray-100 to-gray-50 bg-gradient-to-t  uk-visible@s">
+        <img
+          src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4866092.jpg"
+          alt=""
+        />
+      </div>
       <nav className={style.nav}>
         <div>
           <NavLink
