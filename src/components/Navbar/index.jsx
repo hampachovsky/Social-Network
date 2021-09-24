@@ -4,8 +4,8 @@ import style from './Navbar.module.css';
 
 const Navbar = () => {
   return (
-    <div className={`${style.sidebar} `}>
-      <div className="border-b border-gray-200 from-gray-100 to-gray-50 bg-gradient-to-t  uk-visible@s">
+    <div className={style.sidebar}>
+      <div>
         <img
           src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4866092.jpg"
           alt=""
