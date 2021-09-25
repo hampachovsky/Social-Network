@@ -16,7 +16,7 @@ const Chat = (props) => {
           </div>
           <div className={style.chatHeaderInfo}>
             <h4 className={style.username}>{`${props.username}`}</h4>
-            <p className={style.status}>{`is ${props.online}`}</p>
+            <p className={style.status}>{`is ${props.status}`}</p>
           </div>
         </div>
       </div>
