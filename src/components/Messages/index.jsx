@@ -11,11 +11,12 @@ const Messages = (props) => {
       </div>
       <div>
         <div className={style.chatContainer}>
-          <ChatList userData={props.userData} />
+          <ChatList userData={props.state.userData} />
           <Chat
-            username={props.userData[0].username}
-            status={props.userData[0].status}
-            message={props.userData[0].message}
+            username={props.state.userData[0].username}
+            status={props.state.userData[0].status}
+            message={props.state.userData[0].message}
+            avaImg={props.state.userData[0].avaImg}
           />
         </div>
       </div>

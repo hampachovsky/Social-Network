@@ -4,7 +4,12 @@ import ListItem from './ListItem/index';
 
 const ChatList = (props) => {
   const listElement = props.userData.map((u) => (
-    <ListItem userId={u.userId} username={u.username} message={u.message} />
+    <ListItem
+      userId={u.userId}
+      username={u.username}
+      message={u.message}
+      avaImg={u.avaImg}
+    />
   ));
   return (
     <div className={style.chatList}>
