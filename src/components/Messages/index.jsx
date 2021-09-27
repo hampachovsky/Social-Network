@@ -15,7 +15,7 @@ const Messages = (props) => {
           <Chat
             username={props.state.userData[0].username}
             status={props.state.userData[0].status}
-            message={props.state.userData[0].message}
+            messages={props.state.userData[0].messages}
             avaImg={props.state.userData[0].avaImg}
           />
         </div>

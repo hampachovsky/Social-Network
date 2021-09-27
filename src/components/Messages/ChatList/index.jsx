@@ -7,7 +7,7 @@ const ChatList = (props) => {
     <ListItem
       userId={u.userId}
       username={u.username}
-      message={u.message}
+      message={u.messages[0].content}
       avaImg={u.avaImg}
     />
   ));

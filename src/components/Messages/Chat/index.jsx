@@ -3,6 +3,13 @@ import style from './Chat.module.css';
 import Message from './Message/index';
 
 const Chat = (props) => {
+  const messageElement = props.messages.map((m) => (
+    <Message
+      username={props.username}
+      message={m.content}
+      avaImg={props.avaImg}
+    />
+  ));
   return (
     <div className={style.chatContainer}>
       <div className={style.chatHeader}>
@@ -17,28 +24,7 @@ const Chat = (props) => {
         </div>
       </div>
       <div>
-        <div>
-          <Message
-            username={props.username}
-            message={props.message}
-            avaImg={props.avaImg}
-          />
-          <Message
-            username={props.username}
-            message={props.message}
-            avaImg={props.avaImg}
-          />
-          <Message
-            username={props.username}
-            message={props.message}
-            avaImg={props.avaImg}
-          />
-          <Message
-            username={props.username}
-            message={props.message}
-            avaImg={props.avaImg}
-          />
-        </div>
+        <div>{messageElement}</div>
         <div className={style.chatFooter}>
           <textarea
             className={style.textarea}
