@@ -9,8 +9,14 @@ const MyPosts = (props) => {
 
   return (
     <div className={style.posts}>
-      My posts
-      {postElements}
+      <div className={style.postField}>
+        <textarea name="" id="" cols="50" rows="2"></textarea>
+        <button>Add Post</button>
+      </div>
+      <div className={style.posts}>
+        <div className={style.myPosts}>My posts</div>
+        {postElements}
+      </div>
     </div>
   );
 };

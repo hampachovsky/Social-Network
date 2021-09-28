@@ -1,0 +1,17 @@
+.postField {
+  display: flex;
+  justify-content: center;
+}
+
+.posts {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.myPosts {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
