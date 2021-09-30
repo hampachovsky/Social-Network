@@ -2,7 +2,7 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-BODY';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 
 const store = {
   _state: {
@@ -162,12 +162,12 @@ const store = {
           content: this._state.dialogsPage.newMessageBody,
           recipient: `user${action.id}`,
           owner: true,
-          date: '20.11.2020',
+          date: '10.11.2020',
         });
         this._state.dialogsPage.newMessageBody = '';
         this._callSubscriber(this._state);
         break;
-      case UPDATE_NEW_MESSAGE_TEXT:
+      case UPDATE_NEW_MESSAGE_BODY:
         this._state.dialogsPage.newMessageBody = action.newText;
         this._callSubscriber(this._state);
         break;
@@ -192,7 +192,7 @@ const sendMessageActionCreator = () => ({
 });
 
 const updateMessageBodyCreator = (newText) => ({
-  type: UPDATE_NEW_MESSAGE_TEXT,
+  type: UPDATE_NEW_MESSAGE_BODY,
   newText,
 });
 
