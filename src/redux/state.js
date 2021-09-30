@@ -1,13 +1,13 @@
 const state = {
   profilePage: {
     postData: [
-      { message: 'Hi, man', likeCount: '1' },
-      { message: 'Hi, guys', likeCount: '4' },
-      { message: "Hi, i'ts me", likeCount: '5' },
-      { message: "I'm here", likeCount: '51' },
+      { id: 0, text: 'Hi, man', likeCount: '1' },
+      { id: 1, text: 'Hi, guys', likeCount: '4' },
+      { id: 2, text: "Hi, i'ts me", likeCount: '5' },
+      { id: 3, text: "I'm here", likeCount: '51' },
     ],
   },
-  messagesPage: {
+  dialogsPage: {
     userData: [
       {
         username: 'user1',
@@ -108,5 +108,25 @@ const state = {
     ],
   },
 };
+
+const addPost = (text) => {
+  let id = state.profilePage.postData.length - 1;
+  state.profilePage.postData.push({
+    id,
+    text,
+    likeCount: 0,
+  });
+};
+
+const addMessage = (newMessage, id = 1) => {
+  state.dialogsPage.userData[id].messages.push({
+    content: newMessage,
+    recipient: `user${id}`,
+    date: '20.11.2020',
+  });
+  console.log(state.dialogsPage.userData[id].messages);
+};
+
+export { addPost, addMessage };
 
 export default state;

@@ -13,6 +13,7 @@ const Dialogs = (props) => {
         <div className={style.chatContainer}>
           <ChatList userData={props.state.userData} />
           <Chat
+            addMessage={props.addMessage}
             username={props.state.userData[0].username}
             status={props.state.userData[0].status}
             messages={props.state.userData[0].messages}

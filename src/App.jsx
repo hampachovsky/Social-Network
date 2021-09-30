@@ -4,10 +4,10 @@ import Header from 'components/Header/';
 import Navbar from 'components/Navbar/';
 import Profile from 'components/Profile/';
 import { Route } from 'react-router';
-import Messages from 'components/Messages';
-import News from './components/News/index';
-import Music from './components/Music/index';
-import Settings from './components/Settings/index';
+import News from 'components/News/';
+import Music from 'components/Music/';
+import Settings from 'components/Settings/';
+import Dialogs from 'components/Dialogs';
 
 const App = (props) => {
   return (
@@ -17,11 +17,18 @@ const App = (props) => {
       <div className="app-wrapper-content">
         <Route
           path="/profile"
-          render={() => <Profile state={props.state.profilePage} />}
+          render={() => (
+            <Profile state={props.state.profilePage} addPost={props.addPost} />
+          )}
         />
         <Route
           path="/messages"
-          render={() => <Messages state={props.state.messagesPage} />}
+          render={() => (
+            <Dialogs
+              state={props.state.dialogsPage}
+              addMessage={props.addMessage}
+            />
+          )}
         />
         <Route path="/news" component={News} />
         <Route path="/music" component={Music} />

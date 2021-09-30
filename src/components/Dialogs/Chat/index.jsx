@@ -10,6 +10,14 @@ const Chat = (props) => {
       avaImg={props.avaImg}
     />
   ));
+
+  const newMessage = React.createRef();
+
+  const addMessage = () => {
+    let text = newMessage.current.value;
+    props.addMessage(text);
+  };
+
   return (
     <div className={style.chatContainer}>
       <div className={style.chatHeader}>
@@ -27,6 +35,7 @@ const Chat = (props) => {
         <div>{messageElement}</div>
         <div className={style.chatFooter}>
           <textarea
+            ref={newMessage}
             className={style.textarea}
             placeholder="Your message"
             name=""
@@ -35,7 +44,11 @@ const Chat = (props) => {
             rows="3"
           ></textarea>
           <div className={style.sendBtnContainer}>
-            <button className={style.sendBtn} type="submit">
+            <button
+              onClick={addMessage}
+              className={style.sendBtn}
+              type="submit"
+            >
               Send
             </button>
           </div>
