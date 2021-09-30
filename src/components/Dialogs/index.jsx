@@ -14,6 +14,8 @@ const Dialogs = (props) => {
           <ChatList userData={props.state.userData} />
           <Chat
             addMessage={props.addMessage}
+            updateNewMessageText={props.updateNewMessageText}
+            messageValue={props.state.messageValue}
             username={props.state.userData[0].username}
             status={props.state.userData[0].status}
             messages={props.state.userData[0].messages}

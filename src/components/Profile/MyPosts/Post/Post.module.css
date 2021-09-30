@@ -1,6 +1,7 @@
 .item {
   display: flex;
   color: #333;
+  padding: 10px;
 }
 
 .item img {

@@ -14,8 +14,13 @@ const Chat = (props) => {
   const newMessage = React.createRef();
 
   const addMessage = () => {
+    props.addMessage();
+  };
+
+  const onMessageTextChange = () => {
     let text = newMessage.current.value;
-    props.addMessage(text);
+    props.updateNewMessageText(text);
+    newMessage.current.value = props.messageValue;
   };
 
   return (
@@ -35,6 +40,8 @@ const Chat = (props) => {
         <div>{messageElement}</div>
         <div className={style.chatFooter}>
           <textarea
+            onChange={onMessageTextChange}
+            value={props.messageValue}
             ref={newMessage}
             className={style.textarea}
             placeholder="Your message"
