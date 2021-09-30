@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  addMessageActionCreator,
+  updateMessageTextActionCreator,
+} from 'redux/state';
 import style from './Chat.module.css';
 import Message from './Message/index';
 
@@ -14,12 +18,14 @@ const Chat = (props) => {
   const newMessage = React.createRef();
 
   const addMessage = () => {
-    props.addMessage();
+    let action = addMessageActionCreator();
+    props.dispatch(action);
   };
 
   const onMessageTextChange = () => {
-    let text = newMessage.current.value;
-    props.updateNewMessageText(text);
+    let newText = newMessage.current.value;
+    let action = updateMessageTextActionCreator(newText);
+    props.dispatch(action);
     newMessage.current.value = props.messageValue;
   };
 

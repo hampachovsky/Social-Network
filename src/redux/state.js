@@ -1,3 +1,8 @@
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
 const store = {
   _state: {
     profilePage: {
@@ -120,42 +125,71 @@ const store = {
     console.log('state changed');
   },
 
-  addPost() {
-    let id = this._state.profilePage.postData.length - 1;
-    this._state.profilePage.postData.push({
-      id,
-      text: this._state.profilePage.postValue,
-      likeCount: 0,
-    });
-    this._state.profilePage.postValue = '';
-    this._callSubscriber(this._state);
-  },
-
-  addMessage(id = 0) {
-    this._state.dialogsPage.userData[id].messages.push({
-      content: this._state.dialogsPage.messageValue,
-      recipient: `user${id}`,
-      date: '20.11.2020',
-    });
-    this._state.dialogsPage.messageValue = '';
-    this._callSubscriber(this._state);
-  },
-
-  updateNewPostText(text) {
-    this._state.profilePage.postValue = text;
-    this._callSubscriber(this._state);
-  },
-
-  updateNewMessageText(text) {
-    this._state.dialogsPage.messageValue = text;
-    this._callSubscriber(this._state);
-  },
-
   subscribe(observer) {
     this._callSubscriber = observer;
   },
+  // Aaction = {type: ..., some data: ...,}
+  dispatch(action) {
+    switch (action.type) {
+      case ADD_POST:
+        let id = this._state.profilePage.postData.length - 1;
+        this._state.profilePage.postData.push({
+          id,
+          text: this._state.profilePage.postValue,
+          likeCount: 0,
+        });
+        this._state.profilePage.postValue = '';
+        this._callSubscriber(this._state);
+        break;
+      case UPDATE_NEW_POST_TEXT:
+        this._state.profilePage.postValue = action.newText;
+        this._callSubscriber(this._state);
+        break;
+      case ADD_MESSAGE:
+        this._state.dialogsPage.userData[action.id].messages.push({
+          content: this._state.dialogsPage.messageValue,
+          recipient: `user${action.id}`,
+          date: '20.11.2020',
+        });
+        this._state.dialogsPage.messageValue = '';
+        this._callSubscriber(this._state);
+        break;
+      case UPDATE_NEW_MESSAGE_TEXT:
+        this._state.dialogsPage.messageValue = action.newText;
+        this._callSubscriber(this._state);
+        break;
+      default:
+        break;
+    }
+  },
 };
 
+const addPostActionCreator = () => ({
+  type: ADD_POST,
+});
+
+const updatePostTextActionCreator = (newText) => ({
+  type: UPDATE_NEW_POST_TEXT,
+  newText,
+});
+
+const addMessageActionCreator = () => ({
+  type: ADD_MESSAGE,
+  id: 0,
+});
+
+const updateMessageTextActionCreator = (newText) => ({
+  type: UPDATE_NEW_MESSAGE_TEXT,
+  newText,
+});
+
 window.store = store;
+
+export {
+  addMessageActionCreator,
+  updateMessageTextActionCreator,
+  addPostActionCreator,
+  updatePostTextActionCreator,
+};
 
 export default store;
