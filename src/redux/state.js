@@ -24,16 +24,19 @@ const store = {
             {
               content: 'hello world',
               recipient: 'user2',
+              owner: false,
               date: '11.06.2021',
             },
             {
               content: 'new message',
               recipient: 'user2',
+              owner: false,
               date: '11.05.2021',
             },
             {
               content: 'second wind',
               recipient: 'user2',
+              owner: false,
               date: '11.04.2021',
             },
           ],
@@ -48,16 +51,19 @@ const store = {
             {
               content: 'test world',
               recipient: 'user3',
+              owner: false,
               date: '11.09.2021',
             },
             {
               content: 'new message user 2',
               recipient: 'user3',
+              owner: false,
               date: '11.08.2021',
             },
             {
               content: 'second wind',
               recipient: 'user3',
+              owner: false,
               date: '11.07.2021',
             },
           ],
@@ -71,16 +77,19 @@ const store = {
             {
               content: 'from world',
               recipient: 'user1',
+              owner: false,
               date: '13.09.2021',
             },
             {
               content: 'new message user 3',
               recipient: 'user1',
+              owner: false,
               date: '12.08.2021',
             },
             {
               content: 'wind',
               recipient: 'user1',
+              owner: false,
               date: '01.07.2021',
             },
           ],
@@ -95,16 +104,19 @@ const store = {
             {
               content: 'message world',
               recipient: 'user2',
+              owner: false,
               date: '06.09.2021',
             },
             {
               content: 'new message user 4',
               recipient: 'user3',
+              owner: false,
               date: '08.08.2021',
             },
             {
               content: 'second wind',
               recipient: 'user1',
+              owner: false,
               date: '09.07.2021',
             },
           ],
@@ -149,6 +161,7 @@ const store = {
         this._state.dialogsPage.userData[action.id].messages.push({
           content: this._state.dialogsPage.messageValue,
           recipient: `user${action.id}`,
+          owner: true,
           date: '20.11.2020',
         });
         this._state.dialogsPage.messageValue = '';

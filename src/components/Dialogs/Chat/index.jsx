@@ -11,6 +11,7 @@ const Chat = (props) => {
     <Message
       username={props.username}
       message={m.content}
+      owner={m.owner}
       avaImg={props.avaImg}
     />
   ));
