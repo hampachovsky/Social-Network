@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMessageActionCreator, updateMessageTextActionCreator } from 'redux/state';
+import { sendMessageActionCreator, updateMessageBodyCreator } from 'redux/state';
 import style from './Chat.module.css';
 import Message from './Message/index';
 
@@ -8,18 +8,13 @@ const Chat = (props) => {
     <Message username={props.username} message={m.content} owner={m.owner} avaImg={props.avaImg} />
   ));
 
-  const newMessage = React.createRef();
-
   const addMessage = () => {
-    let action = sendMessageActionCreator();
-    props.dispatch(action);
+    props.dispatch(sendMessageActionCreator());
   };
 
-  const onMessageTextChange = () => {
-    let newText = newMessage.current.value;
-    let action = updateMessageTextActionCreator(newText);
-    props.dispatch(action);
-    newMessage.current.value = props.messageValue;
+  const onNewMessageTextChange = (e) => {
+    let body = e.target.value;
+    props.dispatch(updateMessageBodyCreator(body));
   };
 
   return (
@@ -39,9 +34,8 @@ const Chat = (props) => {
         <div>{messageElement}</div>
         <div className={style.chatFooter}>
           <textarea
-            onChange={onMessageTextChange}
-            value={props.messageValue}
-            ref={newMessage}
+            onChange={onNewMessageTextChange}
+            value={props.newMessageBody}
             className={style.textarea}
             placeholder="Your message"
             name=""

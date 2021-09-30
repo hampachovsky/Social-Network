@@ -2,7 +2,7 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-BODY';
 
 const store = {
   _state: {
@@ -125,7 +125,7 @@ const store = {
             'https://cdn-imgix.headout.com/tour/7064/TOUR-IMAGE/44a6d6c4-86fd-4f93-8204-7ffd4fa4e4e4-4445-IMGWorldsofAdventure-2.JPG',
         },
       ],
-      messageValue: '',
+      newMessageBody: '',
     },
   },
 
@@ -159,16 +159,16 @@ const store = {
         break;
       case SEND_MESSAGE:
         this._state.dialogsPage.userData[action.id].messages.push({
-          content: this._state.dialogsPage.messageValue,
+          content: this._state.dialogsPage.newMessageBody,
           recipient: `user${action.id}`,
           owner: true,
           date: '20.11.2020',
         });
-        this._state.dialogsPage.messageValue = '';
+        this._state.dialogsPage.newMessageBody = '';
         this._callSubscriber(this._state);
         break;
       case UPDATE_NEW_MESSAGE_TEXT:
-        this._state.dialogsPage.messageValue = action.newText;
+        this._state.dialogsPage.newMessageBody = action.newText;
         this._callSubscriber(this._state);
         break;
       default:
@@ -191,7 +191,7 @@ const sendMessageActionCreator = () => ({
   id: 0,
 });
 
-const updateMessageTextActionCreator = (newText) => ({
+const updateMessageBodyCreator = (newText) => ({
   type: UPDATE_NEW_MESSAGE_TEXT,
   newText,
 });
@@ -200,7 +200,7 @@ window.store = store;
 
 export {
   sendMessageActionCreator,
-  updateMessageTextActionCreator,
+  updateMessageBodyCreator,
   addPostActionCreator,
   updatePostTextActionCreator,
 };
