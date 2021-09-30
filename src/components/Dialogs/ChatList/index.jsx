@@ -15,11 +15,7 @@ const ChatList = (props) => {
     <div className={style.chatList}>
       <div className={style.searchBarContainer}>
         <div>
-          <input
-            className={style.searchBar}
-            type="text"
-            placeholder="Search: "
-          />
+          <input className={style.searchBar} type="text" placeholder="Search: " />
         </div>
       </div>
       <div className={style.listItems}>{listElement}</div>

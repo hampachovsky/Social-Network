@@ -1,7 +1,8 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
+const SEND_MESSAGE = 'SEND-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 const store = {
   _state: {
@@ -67,8 +68,7 @@ const store = {
               date: '11.07.2021',
             },
           ],
-          avaImg:
-            'https://www.daphnedemaris.com/wp-content/uploads/2017/11/ava-img.jpg',
+          avaImg: 'https://www.daphnedemaris.com/wp-content/uploads/2017/11/ava-img.jpg',
         },
         {
           username: 'user3',
@@ -157,7 +157,7 @@ const store = {
         this._state.profilePage.postValue = action.newText;
         this._callSubscriber(this._state);
         break;
-      case ADD_MESSAGE:
+      case SEND_MESSAGE:
         this._state.dialogsPage.userData[action.id].messages.push({
           content: this._state.dialogsPage.messageValue,
           recipient: `user${action.id}`,
@@ -186,8 +186,8 @@ const updatePostTextActionCreator = (newText) => ({
   newText,
 });
 
-const addMessageActionCreator = () => ({
-  type: ADD_MESSAGE,
+const sendMessageActionCreator = () => ({
+  type: SEND_MESSAGE,
   id: 0,
 });
 
@@ -199,7 +199,7 @@ const updateMessageTextActionCreator = (newText) => ({
 window.store = store;
 
 export {
-  addMessageActionCreator,
+  sendMessageActionCreator,
   updateMessageTextActionCreator,
   addPostActionCreator,
   updatePostTextActionCreator,

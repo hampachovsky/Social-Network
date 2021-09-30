@@ -1,25 +1,17 @@
 import React from 'react';
-import {
-  addMessageActionCreator,
-  updateMessageTextActionCreator,
-} from 'redux/state';
+import { sendMessageActionCreator, updateMessageTextActionCreator } from 'redux/state';
 import style from './Chat.module.css';
 import Message from './Message/index';
 
 const Chat = (props) => {
   const messageElement = props.messages.map((m) => (
-    <Message
-      username={props.username}
-      message={m.content}
-      owner={m.owner}
-      avaImg={props.avaImg}
-    />
+    <Message username={props.username} message={m.content} owner={m.owner} avaImg={props.avaImg} />
   ));
 
   const newMessage = React.createRef();
 
   const addMessage = () => {
-    let action = addMessageActionCreator();
+    let action = sendMessageActionCreator();
     props.dispatch(action);
   };
 
@@ -58,11 +50,7 @@ const Chat = (props) => {
             rows="3"
           ></textarea>
           <div className={style.sendBtnContainer}>
-            <button
-              onClick={addMessage}
-              className={style.sendBtn}
-              type="submit"
-            >
+            <button onClick={addMessage} className={style.sendBtn} type="submit">
               Send
             </button>
           </div>
