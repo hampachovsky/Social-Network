@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMessageActionCreator, updateMessageBodyCreator } from 'redux/state';
+import { sendMessageActionCreator, updateMessageBodyCreator } from 'redux/dialogs_reducer';
 import style from './Chat.module.css';
 import Message from './Message/index';
 
