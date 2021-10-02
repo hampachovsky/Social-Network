@@ -1,20 +1,25 @@
 import React from 'react';
-import { sendMessageActionCreator, updateMessageBodyCreator } from 'redux/dialogs_reducer';
 import style from './Chat.module.css';
 import Message from './Message/index';
 
 const Chat = (props) => {
-  const messageElement = props.messages.map((m) => (
-    <Message username={props.username} message={m.content} owner={m.owner} avaImg={props.avaImg} />
+  debugger;
+  const messageElement = props.state.userData[0].messages.map((m) => (
+    <Message
+      username={props.state.userData[0].username}
+      message={m.content}
+      owner={m.owner}
+      avaImg={props.state.userData[0].avaImg}
+    />
   ));
 
-  const addMessage = () => {
-    props.dispatch(sendMessageActionCreator());
+  const onAddMessage = () => {
+    props.onAddMessage();
   };
 
   const onNewMessageTextChange = (e) => {
     let body = e.target.value;
-    props.dispatch(updateMessageBodyCreator(body));
+    props.onNewMessageTextChange(body);
   };
 
   return (
@@ -22,11 +27,11 @@ const Chat = (props) => {
       <div className={style.chatHeader}>
         <div className={style.chatHeaderItem}>
           <div className={style.avaImageContainer}>
-            <img className={style.avaImage} src={props.avaImg} alt="" />
+            <img className={style.avaImage} src={props.state.userData[1].avaImg} alt="" />
           </div>
           <div className={style.chatHeaderInfo}>
-            <h4 className={style.username}>{`${props.username}`}</h4>
-            <p className={style.status}>{`is ${props.status}`}</p>
+            <h4 className={style.username}>{`${props.state.userData[0].username}`}</h4>
+            <p className={style.status}>{`is ${props.state.userData[0].status}`}</p>
           </div>
         </div>
       </div>
@@ -44,7 +49,7 @@ const Chat = (props) => {
             rows="3"
           ></textarea>
           <div className={style.sendBtnContainer}>
-            <button onClick={addMessage} className={style.sendBtn} type="submit">
+            <button onClick={onAddMessage} className={style.sendBtn} type="submit">
               Send
             </button>
           </div>

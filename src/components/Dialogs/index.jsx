@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Dialogs.module.css';
-import ChatList from './ChatList/index';
-import Chat from './Chat/index';
+import ChatContainer from './Chat/ChatContainer';
+import ChatListContainer from './ChatList/ChatListContainer';
 
 const Dialogs = (props) => {
   return (
@@ -11,15 +11,8 @@ const Dialogs = (props) => {
       </div>
       <div>
         <div className={style.chatContainer}>
-          <ChatList userData={props.state.userData} />
-          <Chat
-            dispatch={props.dispatch}
-            newMessageBody={props.state.newMessageBody}
-            username={props.state.userData[0].username}
-            status={props.state.userData[0].status}
-            messages={props.state.userData[0].messages}
-            avaImg={props.state.userData[0].avaImg}
-          />
+          <ChatListContainer />
+          <ChatContainer />
         </div>
       </div>
     </div>
