@@ -3,18 +3,19 @@ import style from './Chat.module.css';
 import Message from './Message/index';
 
 const Chat = (props) => {
-  debugger;
-  const messageElement = props.state.userData[0].messages.map((m) => (
+  const filtred = props.dialogsPage.messages.filter((m) => m.author == 'user1');
+  const messageElement = filtred.map((m, i) => (
     <Message
-      username={props.state.userData[0].username}
+      username={props.dialogsPage.userData[0].username}
       message={m.content}
       owner={m.owner}
-      avaImg={props.state.userData[0].avaImg}
+      photoUrl={props.dialogsPage.userData[0].photoUrl}
+      key={i}
     />
   ));
 
-  const onAddMessage = () => {
-    props.onAddMessage();
+  const onSendMessage = () => {
+    props.onSendMessage();
   };
 
   const onNewMessageTextChange = (e) => {
@@ -27,11 +28,11 @@ const Chat = (props) => {
       <div className={style.chatHeader}>
         <div className={style.chatHeaderItem}>
           <div className={style.avaImageContainer}>
-            <img className={style.avaImage} src={props.state.userData[1].avaImg} alt="" />
+            <img className={style.avaImage} src={props.dialogsPage.userData[1].photoUrl} alt="" />
           </div>
           <div className={style.chatHeaderInfo}>
-            <h4 className={style.username}>{`${props.state.userData[0].username}`}</h4>
-            <p className={style.status}>{`is ${props.state.userData[0].status}`}</p>
+            <h4 className={style.username}>{`${props.dialogsPage.userData[0].username}`}</h4>
+            <p className={style.status}>{`is ${props.dialogsPage.userData[0].status}`}</p>
           </div>
         </div>
       </div>
@@ -40,7 +41,7 @@ const Chat = (props) => {
         <div className={style.chatFooter}>
           <textarea
             onChange={onNewMessageTextChange}
-            value={props.newMessageBody}
+            value={props.dialogsPage.newMessageBody}
             className={style.textarea}
             placeholder="Your message"
             name=""
@@ -49,7 +50,7 @@ const Chat = (props) => {
             rows="3"
           ></textarea>
           <div className={style.sendBtnContainer}>
-            <button onClick={onAddMessage} className={style.sendBtn} type="submit">
+            <button onClick={onSendMessage} className={style.sendBtn} type="submit">
               Send
             </button>
           </div>

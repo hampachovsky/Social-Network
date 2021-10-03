@@ -1,32 +1,20 @@
-import React from 'react';
 import { sendMessageActionCreator, updateMessageBodyCreator } from 'redux/dialogs_reducer';
 import Chat from '.';
-import StoreContext from 'StoreContext';
+import { connect } from 'react-redux';
 
-const ChatContainer = (props) => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        const state = store.getState().dialogsPage;
-        const onAddMessage = () => {
-          store.dispatch(sendMessageActionCreator());
-        };
-
-        const onNewMessageTextChange = (text) => {
-          store.dispatch(updateMessageBodyCreator(text));
-        };
-
-        return (
-          <Chat
-            onAddMessage={onAddMessage}
-            onNewMessageTextChange={onNewMessageTextChange}
-            newMessageBody={state.newMessageBody}
-            state={state}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = (state) => {
+  return {
+    dialogsPage: state.dialogsPage,
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSendMessage: () => dispatch(sendMessageActionCreator()),
+    onNewMessageTextChange: (text) => dispatch(updateMessageBodyCreator(text)),
+  };
+};
+
+const ChatContainer = connect(mapStateToProps, mapDispatchToProps)(Chat);
 
 export default ChatContainer;

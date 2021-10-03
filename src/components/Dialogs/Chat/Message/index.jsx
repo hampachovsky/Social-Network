@@ -7,7 +7,7 @@ const Message = (props) => {
       {props.owner ? (
         <div className={style.ownerMessage}>
           <div className={style.avaOwnerContainer}>
-            <img className={style.avaOwnerImage} src={props.avaImg} alt="" />
+            <img className={style.avaOwnerImage} src={props.photoUrl} alt="" />
           </div>
           <div className={style.ownerMessageText}>
             <p className={style.leading}>{props.message}</p>
@@ -16,7 +16,7 @@ const Message = (props) => {
       ) : (
         <div className={style.message}>
           <div className={style.avaContainer}>
-            <img className={style.avaImage} src={props.avaImg} alt="" />
+            <img className={style.avaImage} src={props.photoUrl} alt="" />
           </div>
           <div className={style.messageText}>
             <p className={style.leading}>{props.message}</p>

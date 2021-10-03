@@ -10,11 +10,11 @@ const ListItem = (props) => {
       to={`/messages/${props.userId}`}
     >
       <div className={style.avaImageContainer}>
-        <img className={style.avaImage} src={props.avaImg} alt="" />
+        <img className={style.avaImage} src={props.photoUrl} alt="" />
       </div>
       <div className={style.listItemInfo}>
         <h4 className={style.username}>{props.username}</h4>
-        <p className={style.message}>{props.message}</p>
+        <p className={style.message}>hello world, soon...</p>
       </div>
     </NavLink>
   );

@@ -3,13 +3,8 @@ import style from './ChatList.module.css';
 import ListItem from './ListItem/index';
 
 const ChatList = (props) => {
-  const listElement = props.userData.map((u) => (
-    <ListItem
-      userId={u.userId}
-      username={u.username}
-      message={u.messages[0].content}
-      avaImg={u.avaImg}
-    />
+  const listElement = props.dialogsPage.userData.map((u) => (
+    <ListItem key={u.userId} userId={u.userId} username={u.username} photoUrl={u.photoUrl} />
   ));
   return (
     <div className={style.chatList}>

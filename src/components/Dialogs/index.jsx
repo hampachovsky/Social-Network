@@ -3,7 +3,7 @@ import style from './Dialogs.module.css';
 import ChatContainer from './Chat/ChatContainer';
 import ChatListContainer from './ChatList/ChatListContainer';
 
-const Dialogs = (props) => {
+const Dialogs = () => {
   return (
     <div>
       <div>

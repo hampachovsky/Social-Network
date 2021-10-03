@@ -1,16 +1,16 @@
-import React from 'react';
-import StoreContext from 'StoreContext';
+import { connect } from 'react-redux';
 import ChatList from '.';
 
-const ChatListContainer = (props) => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        const state = store.getState().dialogsPage.userData;
-        return <ChatList userData={state} />;
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = (state) => {
+  return {
+    dialogsPage: state.dialogsPage,
+  };
 };
+
+const mapDispatchToProps = () => {
+  return {};
+};
+
+const ChatListContainer = connect(mapStateToProps, mapDispatchToProps)(ChatList);
 
 export default ChatListContainer;

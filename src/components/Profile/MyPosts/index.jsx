@@ -3,7 +3,9 @@ import style from './MyPosts.module.css';
 import Post from './Post';
 
 const MyPosts = (props) => {
-  const postElements = props.postsData.map((p) => <Post text={p.text} likeCount={p.likeCount} />);
+  const postElements = props.profilePage.postData.map((p) => (
+    <Post key={p.id} text={p.text} likeCount={p.likeCount} />
+  ));
 
   const onAddPost = () => {
     props.onAddPost();
@@ -19,7 +21,7 @@ const MyPosts = (props) => {
       <div className={style.postField}>
         <textarea
           onChange={onPostChange}
-          value={props.postValue}
+          value={props.profilePage.postValue}
           name=""
           id=""
           cols="50"
