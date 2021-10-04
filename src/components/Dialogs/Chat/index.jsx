@@ -3,7 +3,7 @@ import style from './Chat.module.css';
 import Message from './Message/index';
 
 const Chat = (props) => {
-  const filtred = props.dialogsPage.messages.filter((m) => m.author == 'user1');
+  const filtred = props.dialogsPage.messages.filter((m) => m.author === 'user1');
   const messageElement = filtred.map((m, i) => (
     <Message
       username={props.dialogsPage.userData[0].username}
@@ -15,12 +15,12 @@ const Chat = (props) => {
   ));
 
   const onSendMessage = () => {
-    props.onSendMessage();
+    props.sendMessage();
   };
 
   const onNewMessageTextChange = (e) => {
     let body = e.target.value;
-    props.onNewMessageTextChange(body);
+    props.updateMessageBody(body);
   };
 
   return (

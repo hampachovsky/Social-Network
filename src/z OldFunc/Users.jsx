@@ -1,41 +1,29 @@
-import React from 'react';
+/*import React from 'react';
 import style from './Users.module.css';
+import * as axios from 'axios';
 import userPhoto from '../../assets/images/user_img.png';
-import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
-  let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  const pages = [];
-  for (let i = 1; i <= pageCount; i++) {
-    pages.push(i);
-  }
+  const getUsers = () => {
+    if (props.users.length === 0) {
+      axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response) => {
+        props.setUsers(response.data.items);
+      });
+    }
+  };
   return (
     <div className={style.usersAppContainer}>
-      <div className={style.pageList}>
-        {pages.map((p, index) => {
-          return (
-            <span
-              key={index}
-              className={props.currentPage === p && style.selectedPage}
-              onClick={() => props.onPageChanged(p)}
-            >
-              {p}
-            </span>
-          );
-        })}
-      </div>
+      <button onClick={getUsers}>Get User</button>
       <h1>Users</h1>
       {props.users.map((u, id) => (
         <div key={id} className={style.usersContainer}>
           <div className={style.leftSideContainer}>
             <div className={style.avaImgContainer}>
-              <NavLink to={`/profile/${u.id}`}>
-                <img
-                  className={style.avaImg}
-                  src={u.photos.small != null ? u.photos.small : userPhoto}
-                  alt=""
-                />
-              </NavLink>
+              <img
+                className={style.avaImg}
+                src={u.photos.small != null ? u.photos.small : userPhoto}
+                alt=""
+              />
             </div>
             <div className={style.followBtnContainer}>
               <button onClick={() => props.toggleFollow(u.id)} className={style.followBtn}>
@@ -56,11 +44,11 @@ const Users = (props) => {
             </div>
             <div className={style.rightSide}>
               <div>
-                <p className={style.leading2}>CITY{/* u.location.city */}</p>
-              </div>
+                <p className={style.leading2}>CITY{u.location.city }</p>
+             </div>
               <div>
-                <p className={style.leading2}>COUNTRY{/* u.location.country */}</p>
-              </div>
+                <p className={style.leading2}>COUNTRY{u.location.country }</p>
+           </div>
             </div>
           </div>
         </div>
@@ -73,3 +61,4 @@ const Users = (props) => {
 };
 
 export default Users;
+*/

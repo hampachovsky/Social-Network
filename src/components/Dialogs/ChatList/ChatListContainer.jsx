@@ -7,10 +7,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
-};
-
-const ChatListContainer = connect(mapStateToProps, mapDispatchToProps)(ChatList);
+const ChatListContainer = connect(mapStateToProps, {})(ChatList);
 
 export default ChatListContainer;

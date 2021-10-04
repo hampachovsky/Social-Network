@@ -8,16 +8,16 @@ const MyPosts = (props) => {
   ));
 
   const onAddPost = () => {
-    props.onAddPost();
+    props.addPost();
   };
 
   const onPostChange = (e) => {
     let newText = e.target.value;
-    props.upateNewPostText(newText);
+    props.updatePostText(newText);
   };
 
   return (
-    <div className={style.posts}>
+    <div className={style.postsContainer}>
       <div className={style.postField}>
         <textarea
           onChange={onPostChange}

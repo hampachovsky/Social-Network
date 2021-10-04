@@ -31,7 +31,7 @@ const Navbar = () => {
         </div>
         <div>
           <NavLink activeClassName={style.activeLink} className={style.item} to="/users">
-            Find Users
+            Users
           </NavLink>
         </div>
         <div>
