@@ -2,6 +2,7 @@ import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/user_img.png';
 import { NavLink } from 'react-router-dom';
+import { followAPI } from 'api/api';
 
 const Users = (props) => {
   let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -9,6 +10,20 @@ const Users = (props) => {
   for (let i = 1; i <= pageCount; i++) {
     pages.push(i);
   }
+  const toggleFollow = (followed, id) => {
+    followed
+      ? followAPI.unfollow(id).then((data) => {
+          if (data.resultCode === 0) {
+            props.toggleFollow(id);
+          }
+        })
+      : followAPI.follow(id).then((data) => {
+          if (data.resultCode === 0) {
+            props.toggleFollow(id);
+          }
+        });
+  };
+
   return (
     <div className={style.usersAppContainer}>
       <div className={style.pageList}>
@@ -26,7 +41,7 @@ const Users = (props) => {
       </div>
       <h1>Users</h1>
       {props.users.map((u, id) => (
-        <div key={id} className={style.usersContainer}>
+        <div key={u.id} className={style.usersContainer}>
           <div className={style.leftSideContainer}>
             <div className={style.avaImgContainer}>
               <NavLink to={`/profile/${u.id}`}>
@@ -38,7 +53,7 @@ const Users = (props) => {
               </NavLink>
             </div>
             <div className={style.followBtnContainer}>
-              <button onClick={() => props.toggleFollow(u.id)} className={style.followBtn}>
+              <button onClick={() => toggleFollow(u.followed, u.id)} className={style.followBtn}>
                 {u.followed ? 'Unfollow' : 'Follow'}
               </button>
             </div>
