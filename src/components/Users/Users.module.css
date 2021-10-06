@@ -56,6 +56,12 @@
   cursor: pointer;
 }
 
+.followBtn:disabled,
+.followBtn[disabled] {
+  background-color: #e5e7eb;
+  cursor: default;
+}
+
 .rightSideContainer {
   display: flex;
   border: 1px solid #e5e7eb;

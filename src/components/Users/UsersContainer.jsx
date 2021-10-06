@@ -1,35 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setUsers,
-  toggleFollow,
-  setCurrentPage,
-  setTotalUsersCount,
-  toggleFetching,
+  toggleFollowingProgress,
+  getUsers,
+  getCurrentPage,
+  toggleFollowedStatus,
 } from 'redux/users_reducer';
 import Users from '.';
 import Preloader from 'components/common/Preloader';
-import { usersAPI } from 'api/api';
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
-    if (this.props.users.length === 0) {
-      this.props.toggleFetching();
-      usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
-        this.props.toggleFetching();
-        this.props.setUsers(data.items);
-        this.props.setTotalUsersCount(data.totalCount);
-      });
-    }
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (page) => {
-    this.props.setCurrentPage(page);
-    this.props.toggleFetching();
-    usersAPI.getUsers(page, this.props.pageSize).then((data) => {
-      this.props.toggleFetching();
-      this.props.setUsers(data.items);
-    });
+    this.props.getCurrentPage(page, this.props.pageSize);
   };
 
   render() {
@@ -42,7 +28,8 @@ class UsersAPIComponent extends React.Component {
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
           users={this.props.users}
-          toggleFollow={this.props.toggleFollow}
+          followingInProgress={this.props.followingInProgress}
+          toggleFollowedStatus={this.props.toggleFollowedStatus}
         />
       </>
     );
@@ -56,15 +43,15 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
+    followingInProgress: state.usersPage.followingInProgress,
   };
 };
 
 const UsersContainer = connect(mapStateToProps, {
-  toggleFollow,
-  setUsers,
-  setCurrentPage,
-  setTotalUsersCount,
-  toggleFetching,
+  toggleFollowingProgress,
+  getUsers,
+  getCurrentPage,
+  toggleFollowedStatus,
 })(UsersAPIComponent);
 
 export default UsersContainer;
