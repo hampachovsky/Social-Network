@@ -5,9 +5,11 @@ import {
   getUsers,
   getCurrentPage,
   toggleFollowedStatus,
-} from 'redux/users_reducer';
+} from 'redux/usersReducer';
 import Users from '.';
 import Preloader from 'components/common/Preloader';
+import withAuthRedirect from 'hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
@@ -47,11 +49,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const UsersContainer = connect(mapStateToProps, {
-  toggleFollowingProgress,
-  getUsers,
-  getCurrentPage,
-  toggleFollowedStatus,
-})(UsersAPIComponent);
-
-export default UsersContainer;
+export default compose(
+  connect(mapStateToProps, {
+    toggleFollowingProgress,
+    getUsers,
+    getCurrentPage,
+    toggleFollowedStatus,
+  }),
+  withAuthRedirect
+)(UsersAPIComponent);

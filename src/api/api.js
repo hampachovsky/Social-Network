@@ -28,7 +28,7 @@ const followAPI = {
 };
 
 const authAPI = {
-  getUser() {
+  me() {
     return instance.get('auth/me').then((response) => response.data);
   },
 };

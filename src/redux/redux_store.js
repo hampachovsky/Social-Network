@@ -1,8 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import dialogsReducer from './dialogs_reducer';
-import profileReducer from './profile_reducer';
-import usersReducer from './users_reducer';
-import authReducer from './auth_reducer';
+import dialogsReducer from './dialogsReducer';
+import profileReducer from './profileReducer';
+import usersReducer from './usersReducer';
+import authReducer from './authReducer';
 import ThunkMiddleware from 'redux-thunk';
 
 const reducers = combineReducers({

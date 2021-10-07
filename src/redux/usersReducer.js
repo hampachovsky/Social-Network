@@ -73,9 +73,9 @@ const getUsers = (currentPage, pageSize) => {
   return (dispatch) => {
     dispatch(toggleFetching());
     usersAPI.getUsers(currentPage, pageSize).then((data) => {
-      dispatch(toggleFetching());
       dispatch(setUsers(data.items));
       dispatch(setTotalUsersCount(data.totalCount));
+      dispatch(toggleFetching());
     });
   };
 };
