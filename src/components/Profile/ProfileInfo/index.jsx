@@ -17,19 +17,18 @@ const ProfileInfo = (props) => {
       </div>
       <div className={style.infoContainer}>
         <h2 className={style.fullName}>{props.profile.fullName}</h2>
-        <ProfileStatus status={props.profile.aboutMe} />
+        <p className={style.aboutMe}>About me: {props.profile.aboutMe}</p>
+        <ProfileStatus updateUserStatus={props.updateUserStatus} status={props.status} />
         {props.profile.lookingForAJob ? (
           <div className={style.jobDescriptionContainer}>
-            <p className={style.jobFindStatus}>Работа: В активном поиске</p>
+            <p className={style.jobFindStatus}>Work: in active search</p>
             <p className={style.jobFindDescription}>
-              Описание: {props.profile.lookingForAJobDescription}
+              Description: {props.profile.lookingForAJobDescription}
             </p>
           </div>
         ) : (
-          <p className={style.jobFindStatus}>Работа: В активном поиске</p>
+          <p className={style.jobFindStatus}>Work: in active search</p>
         )}
-
-        <p>{props.profile.lookingForAJob}</p>
       </div>
     </div>
   );
