@@ -1,4 +1,4 @@
-import { sendMessage, updateMessageBody } from 'redux/dialogsReducer';
+import { sendMessage } from 'redux/dialogsReducer';
 import Chat from '.';
 import { connect } from 'react-redux';
 
@@ -8,4 +8,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { sendMessage, updateMessageBody })(Chat);
+export default connect(mapStateToProps, { sendMessage })(Chat);

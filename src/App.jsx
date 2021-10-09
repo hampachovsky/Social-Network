@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import Navbar from 'components/Navbar/';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import News from 'components/News/';
 import Music from 'components/Music/';
 import Settings from 'components/Settings/';
@@ -17,15 +17,17 @@ const App = () => {
     <div className="app-wrapper">
       <HeaderContainer />
       <Navbar />
-      <div className="app-wrapper-content">
-        <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-        <Route path="/messages" render={() => <AuthRedirectComponent />} />
-        <Route path="/users" render={() => <UsersContainer />} />
+      <Switch>
         <Route path="/login" render={() => <Login />} />
-        <Route path="/news" component={News} />
-        <Route path="/music" component={Music} />
-        <Route path="/settings" component={Settings} />
-      </div>
+        <div className="app-wrapper-content">
+          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+          <Route path="/messages" render={() => <AuthRedirectComponent />} />
+          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/news" component={News} />
+          <Route path="/music" component={Music} />
+          <Route path="/settings" component={Settings} />
+        </div>
+      </Switch>
     </div>
   );
 };

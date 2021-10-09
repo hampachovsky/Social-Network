@@ -1,5 +1,4 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 
 const initialState = {
   userData: [
@@ -127,7 +126,6 @@ const initialState = {
       date: '09.07.2021',
     },
   ],
-  newMessageBody: '',
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -138,36 +136,28 @@ const dialogsReducer = (state = initialState, action) => {
         messages: [
           ...state.messages,
           {
-            content: state.newMessageBody,
+            content: action.newMessageBody,
             recipient: `user${action.id}`,
             owner: true,
             author: `user1`,
             date: '10.11.2020',
           },
         ],
-        newMessageBody: '',
       };
     }
 
-    case UPDATE_NEW_MESSAGE_BODY: {
-      return { ...state, newMessageBody: action.newText };
-    }
     default: {
       return state;
     }
   }
 };
 
-const sendMessage = () => ({
+const sendMessage = (newMessageBody) => ({
   type: SEND_MESSAGE,
-  id: 0,
+  id: 1,
+  newMessageBody,
 });
 
-const updateMessageBody = (newText) => ({
-  type: UPDATE_NEW_MESSAGE_BODY,
-  newText,
-});
-
-export { sendMessage, updateMessageBody };
+export { sendMessage };
 
 export default dialogsReducer;

@@ -1,34 +1,51 @@
 import React from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post';
+import { Formik, Field, Form } from 'formik';
+import * as yup from 'yup';
+
+const validationScheme = yup.object().shape({
+  postValue: yup.string().min(8, '8 Char min').max(300, '300 Char max'),
+});
 
 const MyPosts = (props) => {
   const postElements = props.profilePage.postData.map((p) => (
     <Post key={p.id} text={p.text} likeCount={p.likeCount} />
   ));
 
-  const onAddPost = () => {
-    props.addPost();
-  };
-
-  const onPostChange = (e) => {
-    let newText = e.target.value;
-    props.updatePostText(newText);
-  };
-
   return (
     <div className={style.postsContainer}>
-      <div className={style.postField}>
-        <textarea
-          onChange={onPostChange}
-          value={props.profilePage.postValue}
-          name=""
-          id=""
-          cols="50"
-          rows="2"
-        />
-        <button onClick={onAddPost}>Add Post</button>
-      </div>
+      <Formik
+        initialValues={{ postValue: '' }}
+        onSubmit={(values, actions) => {
+          props.addPost(values.postValue);
+          actions.setSubmitting(false);
+          actions.resetForm({
+            postValue: '',
+          });
+        }}
+        validationSchema={validationScheme}
+        validateOnBlur
+      >
+        {({ values, dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit }) => (
+          <Form onSubmit={handleSubmit} className={style.postField}>
+            {touched.postValue && errors.postValue && (
+              <p className={style.errors}>{errors.postValue}</p>
+            )}
+            <Field
+              type={`text`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.postValue}
+              name={`postValue`}
+              component={PostInput}
+            />
+            <button disabled={!dirty && isValid} className={style.addPostBtn} type={`submit`}>
+              Add Post
+            </button>
+          </Form>
+        )}
+      </Formik>
       <div className={style.posts}>
         <div className={style.myPosts}>My posts</div>
         {postElements}
@@ -36,5 +53,9 @@ const MyPosts = (props) => {
     </div>
   );
 };
+
+const PostInput = ({ field, form, ...props }) => (
+  <input {...field} className={style.postValueInput} />
+);
 
 export default MyPosts;

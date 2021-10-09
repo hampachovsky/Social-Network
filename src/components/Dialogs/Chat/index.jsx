@@ -1,6 +1,12 @@
 import React from 'react';
 import style from './Chat.module.css';
 import Message from './Message/index';
+import { Formik, Field, Form } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  messageBody: yup.string().max(300, 'Max char 300'),
+});
 
 const Chat = (props) => {
   const filtred = props.dialogsPage.messages.filter((m) => m.author === 'user1');
@@ -13,15 +19,6 @@ const Chat = (props) => {
       key={i}
     />
   ));
-
-  const onSendMessage = () => {
-    props.sendMessage();
-  };
-
-  const onNewMessageTextChange = (e) => {
-    let body = e.target.value;
-    props.updateMessageBody(body);
-  };
 
   return (
     <div className={style.chatContainer}>
@@ -38,23 +35,42 @@ const Chat = (props) => {
       </div>
       <div>
         <div>{messageElement}</div>
-        <div className={style.chatFooter}>
-          <textarea
-            onChange={onNewMessageTextChange}
-            value={props.dialogsPage.newMessageBody}
-            className={style.textarea}
-            placeholder="Your message"
-            name=""
-            id=""
-            cols="50"
-            rows="3"
-          ></textarea>
-          <div className={style.sendBtnContainer}>
-            <button onClick={onSendMessage} className={style.sendBtn} type="submit">
-              Send
-            </button>
-          </div>
-        </div>
+        <Formik
+          initialValues={{ messageBody: '' }}
+          onSubmit={(values, actions) => {
+            actions.validateForm(values.messageBody);
+            props.sendMessage(values.messageBody);
+            actions.setSubmitting(false);
+            actions.setValues({ messageBody: '' });
+          }}
+          validationSchema={validationSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
+          {({ values, touched, errors, dirty, isValid, handleChange, handleSubmit }) => (
+            <Form onSubmit={handleSubmit} className={style.chatFooter}>
+              <Field
+                onChange={handleChange}
+                value={values.messageBody}
+                className={style.textarea}
+                placeholder="Your message"
+                name={`messageBody`}
+                cols="50"
+                rows="3"
+              />
+              <div className={style.sendBtnContainer}>
+                <button disabled={!dirty && isValid} className={style.sendBtn} type={`submit`}>
+                  Send
+                </button>
+              </div>
+              {touched.messageBody && errors.messageBody && (
+                <div className={style.errorContainer}>
+                  <p className={style.errors}>{errors.messageBody}</p>
+                </div>
+              )}
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

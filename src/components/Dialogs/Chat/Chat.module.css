@@ -97,3 +97,22 @@
 .sendBtn:hover {
   cursor: pointer;
 }
+
+.sendBtn:disabled,
+.sendBtn[disabled] {
+  background-color: rgba(21, 100, 179, 0.2) !important;
+  cursor: default;
+}
+
+.errors {
+  text-align: center;
+  margin-top: 0 !important;
+  margin-bottom: 1rem;
+  color: #c3002f !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.errorContainer {
+  display: inline-block;
+}
