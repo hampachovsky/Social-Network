@@ -9,8 +9,6 @@ const initialState = {
   isAuth: false,
 };
 
-// FIXME: isAuth to true in SET_USER_DATA
-
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER_DATA: {

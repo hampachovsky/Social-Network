@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Chat.module.css';
 import Message from './Message/index';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
@@ -63,11 +63,8 @@ const Chat = (props) => {
                   Send
                 </button>
               </div>
-              {touched.messageBody && errors.messageBody && (
-                <div className={style.errorContainer}>
-                  <p className={style.errors}>{errors.messageBody}</p>
-                </div>
-              )}
+
+              <ErrorMessage component={`p`} className={style.errors} name={`messageBody`} />
             </Form>
           )}
         </Formik>

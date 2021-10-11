@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 
 const validationScheme = yup.object().shape({
@@ -29,9 +29,7 @@ const MyPosts = (props) => {
       >
         {({ values, dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit }) => (
           <Form onSubmit={handleSubmit} className={style.postField}>
-            {touched.postValue && errors.postValue && (
-              <p className={style.errors}>{errors.postValue}</p>
-            )}
+            <ErrorMessage component={`p`} className={style.errors} name={`postValue`} />
             <Field
               type={`text`}
               onChange={handleChange}
@@ -55,7 +53,7 @@ const MyPosts = (props) => {
 };
 
 const PostInput = ({ field, form, ...props }) => (
-  <input {...field} className={style.postValueInput} />
+  <input {...field} className={style.postValueInput} placeholder="Post text" />
 );
 
 export default MyPosts;

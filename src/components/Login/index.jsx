@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import React from 'react';
 import style from './Login.module.css';
 import * as yup from 'yup';
@@ -34,8 +34,7 @@ const Login = () => {
             <h1>Log in</h1>
             <p>Email and password</p>
             <div className={style.inputContainer}>
-              {touched.email && errors.email && <p className={style.error}>{errors.email}</p>}
-
+              <ErrorMessage component={`p`} className={style.error} name={`email`} />
               <Field
                 className={style.email}
                 name={`email`}
@@ -45,9 +44,7 @@ const Login = () => {
                 onBlur={handleBlur}
                 value={values.email}
               />
-              {touched.password && errors.password && (
-                <p className={style.error}>{errors.password}</p>
-              )}
+              <ErrorMessage component={`p`} className={style.error} name={`password`} />
               <Field
                 className={style.password}
                 name={`password`}
