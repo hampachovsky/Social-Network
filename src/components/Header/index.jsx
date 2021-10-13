@@ -7,13 +7,18 @@ const Header = (props) => {
     <header className={style.header}>
       <div className={style.loginContainer}>
         {props.isAuth ? (
-          <NavLink
-            onClick={() => props.getUserProfile(props.id)}
-            className={style.login}
-            to={`/profile/${props.id}`}
-          >
-            {props.login}
-          </NavLink>
+          <div>
+            <NavLink
+              onClick={() => props.getUserProfile(props.id)}
+              className={style.login}
+              to={`/profile/${props.id}`}
+            >
+              {props.login}
+            </NavLink>
+            <NavLink onClick={() => props.logout()} className={style.logout} to={`/login`}>
+              Logout
+            </NavLink>
+          </div>
         ) : (
           <NavLink className={style.login} to="/login">
             Login

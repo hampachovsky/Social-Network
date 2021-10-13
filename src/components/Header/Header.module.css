@@ -24,3 +24,9 @@
   color: rgb(37, 99, 235);
   text-decoration: none;
 }
+
+.logout {
+  color: rgb(37, 99, 235);
+  text-decoration: none;
+  margin-left: 0.5rem;
+}

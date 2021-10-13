@@ -27,7 +27,7 @@ const MyPosts = (props) => {
         validationSchema={validationScheme}
         validateOnBlur
       >
-        {({ values, dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, dirty, isValid, handleChange, handleBlur, handleSubmit }) => (
           <Form onSubmit={handleSubmit} className={style.postField}>
             <ErrorMessage component={`p`} className={style.errors} name={`postValue`} />
             <Field

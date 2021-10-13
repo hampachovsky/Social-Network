@@ -2,11 +2,16 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import React from 'react';
 import style from './Login.module.css';
 import * as yup from 'yup';
+import { connect } from 'react-redux';
+import { login } from 'redux/authReducer';
+import { Redirect } from 'react-router';
+
 const validationScheme = yup.object().shape({
   email: yup.string().email('Enter correct email').required('Please enter email'),
   password: yup.string().min(8, '8 Char min').required('Please enter password'),
 });
-const Login = () => {
+const Login = (props) => {
+  if (props.isAuth) return <Redirect to="/profile" />;
   return (
     <div className={style.loginFormWrapper}>
       <Formik
@@ -18,6 +23,7 @@ const Login = () => {
         validateOnBlur
         validationSchema={validationScheme}
         onSubmit={(values, actions) => {
+          props.login(values.email, values.password, values.rememberMe);
           actions.setSubmitting(false);
           actions.resetForm({
             values: {
@@ -26,10 +32,9 @@ const Login = () => {
               rememberMe: false,
             },
           });
-          console.log(values);
         }}
       >
-        {({ values, dirty, isValid, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, dirty, isValid, handleChange, handleBlur, handleSubmit }) => (
           <Form onSubmit={handleSubmit} className={style.loginFormConainer}>
             <h1>Log in</h1>
             <p>Email and password</p>
@@ -70,4 +75,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+  };
+};
+
+export default connect(mapStateToProps, { login })(Login);
