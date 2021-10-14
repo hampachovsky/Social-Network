@@ -69,43 +69,29 @@ const toggleFollowingProgress = (isFetching, id) => ({
   id,
 });
 
-const getUsers = (currentPage, pageSize) => {
-  return (dispatch) => {
-    dispatch(toggleFetching());
-    usersAPI.getUsers(currentPage, pageSize).then((data) => {
-      dispatch(setUsers(data.items));
-      dispatch(setTotalUsersCount(data.totalCount));
-      dispatch(toggleFetching());
-    });
-  };
+const getUsers = (currentPage, pageSize) => async (dispatch) => {
+  dispatch(toggleFetching());
+  const data = await usersAPI.getUsers(currentPage, pageSize);
+  dispatch(setUsers(data.items));
+  dispatch(setTotalUsersCount(data.totalCount));
+  dispatch(toggleFetching());
 };
 
-const getCurrentPage = (page, pageSize) => {
-  return (dispatch) => {
-    dispatch(setCurrentPage(page));
-    dispatch(toggleFetching());
-    usersAPI.getUsers(page, pageSize).then((data) => {
-      dispatch(toggleFetching());
-      dispatch(setUsers(data.items));
-    });
-  };
+const getCurrentPage = (page, pageSize) => async (dispatch) => {
+  dispatch(setCurrentPage(page));
+  dispatch(toggleFetching());
+  const data = await usersAPI.getUsers(page, pageSize);
+  dispatch(toggleFetching());
+  dispatch(setUsers(data.items));
 };
 
-const toggleFollowedStatus = (followed, id) => (dispatch) => {
+const toggleFollowedStatus = (followed, id) => async (dispatch) => {
   dispatch(toggleFollowingProgress(true, id));
-  followed
-    ? followAPI.unfollow(id).then((data) => {
-        if (data.resultCode === 0) {
-          dispatch(toggleFollow(id));
-        }
-        dispatch(toggleFollowingProgress(false, id));
-      })
-    : followAPI.follow(id).then((data) => {
-        if (data.resultCode === 0) {
-          dispatch(toggleFollow(id));
-        }
-        dispatch(toggleFollowingProgress(false, id));
-      });
+  let data = followed ? await followAPI.unfollow(id) : await followAPI.follow(id);
+  if (data.resultCode === 0) {
+    dispatch(toggleFollow(id));
+  }
+  dispatch(toggleFollowingProgress(false, id));
 };
 
 export { toggleFollowingProgress, getUsers, getCurrentPage, toggleFollowedStatus };

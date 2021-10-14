@@ -3,16 +3,16 @@ import style from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
+  const onOpenProfile = () => {
+    props.getUserProfile(props.id);
+    props.getUserStatus(props.id);
+  };
   return (
     <header className={style.header}>
       <div className={style.loginContainer}>
         {props.isAuth ? (
           <div>
-            <NavLink
-              onClick={() => props.getUserProfile(props.id)}
-              className={style.login}
-              to={`/profile/${props.id}`}
-            >
+            <NavLink onClick={onOpenProfile} className={style.login} to={`/profile/${props.id}`}>
               {props.login}
             </NavLink>
             <NavLink onClick={() => props.logout()} className={style.logout} to={`/login`}>

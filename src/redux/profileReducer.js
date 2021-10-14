@@ -48,26 +48,23 @@ const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 
 const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
 
-const getUserProfile = (id) => (dispatch) => {
-  profileAPI.getUser(id).then((data) => {
-    dispatch(setUserProfile(data));
-  });
+const getUserProfile = (id) => async (dispatch) => {
+  const data = await profileAPI.getUser(id);
+  dispatch(setUserProfile(data));
 };
 
-const getUserStatus = (id) => (dispatch) => {
-  profileAPI.getStatus(id).then((response) => {
-    if (response.status === 200) {
-      dispatch(setUserStatus(response.data));
-    }
-  });
+const getUserStatus = (id) => async (dispatch) => {
+  const data = await profileAPI.getStatus(id);
+  if (data.status === 200) {
+    dispatch(setUserStatus(data.data));
+  }
 };
 
-const updateUserStatus = (status) => (dispatch) => {
-  profileAPI.updateStatus(status).then((response) => {
-    if (response.data.resultCode === 0) {
-      dispatch(setUserStatus(status));
-    }
-  });
+const updateUserStatus = (status) => async (dispatch) => {
+  const data = await profileAPI.updateStatus(status);
+  if (data.data.resultCode === 0) {
+    dispatch(setUserStatus(status));
+  }
 };
 
 export { addPost, setUserProfile, getUserProfile, getUserStatus, updateUserStatus, setUserStatus };

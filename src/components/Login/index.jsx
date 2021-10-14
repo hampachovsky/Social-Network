@@ -34,11 +34,12 @@ const Login = (props) => {
           });
         }}
       >
-        {({ values, dirty, isValid, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, dirty, isValid, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
           <Form onSubmit={handleSubmit} className={style.loginFormConainer}>
             <h1>Log in</h1>
             <p>Email and password</p>
             <div className={style.inputContainer}>
+              {props.formError && <p className={style.error}>{props.formError}</p>}
               <ErrorMessage component={`p`} className={style.error} name={`email`} />
               <Field
                 className={style.email}
@@ -65,7 +66,11 @@ const Login = (props) => {
               <Field className={style.checkbox} name={`rememberMe`} type="checkbox" />
               <label htmlFor="rememberme">Remember me </label>
             </div>
-            <button disabled={!dirty && isValid} type={`submit`} className={style.loginBtn}>
+            <button
+              disabled={(!dirty && isValid) || isSubmitting}
+              type={`submit`}
+              className={style.loginBtn}
+            >
               Login
             </button>
           </Form>
@@ -78,6 +83,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.isAuth,
+    formError: state.auth.formError,
   };
 };
 

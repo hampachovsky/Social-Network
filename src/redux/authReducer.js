@@ -1,12 +1,14 @@
 import { authAPI } from 'api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA';
+const SET_FORM_ERROR = 'SET_FORM_ERROR';
 
 const initialState = {
   id: null,
   login: null,
   email: null,
   isAuth: false,
+  formError: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -15,6 +17,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+    }
+    case SET_FORM_ERROR: {
+      return {
+        ...state,
+        formError: action.payload.formError,
       };
     }
     default:
@@ -27,28 +35,34 @@ const setUserData = ({ id, login, email }, isAuth) => ({
   payload: { id, login, email, isAuth },
 });
 
-const getUser = () => (dispatch) => {
-  authAPI.me().then((data) => {
+const setFormError = (error) => ({
+  type: SET_FORM_ERROR,
+  payload: { formError: error },
+});
+
+const getAuthUser = () => async (dispatch) => {
+  const data = await authAPI.me();
+  if (data.resultCode === 0) {
     dispatch(setUserData(data.data, true));
-  });
+  }
 };
 
-const login = (email, password, rememberMe) => (dispatch) => {
-  authAPI.login(email, password, rememberMe).then((respone) => {
-    if (respone.data.resultCode === 0) {
-      dispatch(getUser());
-    }
-  });
+const login = (email, password, rememberMe) => async (dispatch) => {
+  const data = await authAPI.login(email, password, rememberMe);
+  if (data.data.resultCode === 0) {
+    dispatch(getAuthUser());
+  } else {
+    dispatch(setFormError(data.data.messages[0]));
+  }
 };
 
-const logout = () => (dispatch) => {
-  authAPI.logout().then((respone) => {
-    if (respone.data.resultCode === 0) {
-      dispatch(setUserData({ id: null, login: null, email: null }, false));
-    }
-  });
+const logout = () => async (dispatch) => {
+  const data = await authAPI.logout();
+  if (data.data.resultCode === 0) {
+    dispatch(setUserData({ id: null, login: null, email: null }, false));
+  }
 };
 
-export { getUser, login, logout };
+export { getAuthUser, login, logout };
 
 export default authReducer;
