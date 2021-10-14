@@ -1,8 +1,8 @@
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import * as yup from 'yup';
 import style from './MyPosts.module.css';
 import Post from './Post';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as yup from 'yup';
 
 const validationScheme = yup.object().shape({
   postValue: yup.string().min(8, '8 Char min').max(300, '300 Char max'),

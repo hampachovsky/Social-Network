@@ -1,7 +1,7 @@
 import React from 'react';
-import style from './Users.module.css';
-import userPhoto from '../../assets/images/user_img.png';
 import { NavLink } from 'react-router-dom';
+import userPhoto from '../../assets/images/user_img.png';
+import style from './Users.module.css';
 
 const Users = (props) => {
   let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);

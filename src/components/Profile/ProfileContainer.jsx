@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUserProfile, updateUserStatus, getUserStatus } from 'redux/profileReducer';
-import Profile from '.';
 import { Redirect, withRouter } from 'react-router';
-//import withAuthRedirect from 'hoc/withAuthRedirect';
 import { compose } from 'redux';
+import { getUserProfile, getUserStatus, updateUserStatus } from 'redux/profileReducer';
+import Profile from '.';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
@@ -40,7 +39,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-// FIXME:   withAuthRedirect
 export default compose(
   connect(mapStateToProps, { getUserProfile, updateUserStatus, getUserStatus }),
   withRouter

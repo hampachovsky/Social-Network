@@ -1,8 +1,8 @@
+import withAuthRedirect from 'hoc/withAuthRedirect';
 import React from 'react';
-import style from './Dialogs.module.css';
 import ChatContainer from './Chat/ChatContainer';
 import ChatListContainer from './ChatList/ChatListContainer';
-import withAuthRedirect from 'hoc/withAuthRedirect';
+import style from './Dialogs.module.css';
 
 const Dialogs = () => {
   return (

@@ -35,7 +35,7 @@ const usersReducer = (state = initialState, action) => {
       return { ...state, currentPage: action.pageNumber };
     }
     case SET_TOTAL_USERS_COUNT: {
-      return { ...state, totalUsersCount: action.totalCount - 15100 };
+      return { ...state, totalUsersCount: action.totalCount };
     }
     case TOGGLE_FETCHING: {
       return { ...state, isFetching: !state.isFetching };
@@ -69,7 +69,7 @@ const toggleFollowingProgress = (isFetching, id) => ({
   id,
 });
 
-const getUsers = (currentPage, pageSize) => async (dispatch) => {
+const requestUsers = (currentPage, pageSize) => async (dispatch) => {
   dispatch(toggleFetching());
   const data = await usersAPI.getUsers(currentPage, pageSize);
   dispatch(setUsers(data.items));
@@ -94,6 +94,6 @@ const toggleFollowedStatus = (followed, id) => async (dispatch) => {
   dispatch(toggleFollowingProgress(false, id));
 };
 
-export { toggleFollowingProgress, getUsers, getCurrentPage, toggleFollowedStatus };
+export { toggleFollowingProgress, requestUsers, getCurrentPage, toggleFollowedStatus };
 
 export default usersReducer;

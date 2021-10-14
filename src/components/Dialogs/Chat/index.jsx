@@ -1,8 +1,8 @@
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import * as yup from 'yup';
 import style from './Chat.module.css';
 import Message from './Message/index';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
   messageBody: yup.string().max(300, 'Max char 300'),

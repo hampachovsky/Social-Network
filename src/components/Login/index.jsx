@@ -1,10 +1,10 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
-import style from './Login.module.css';
-import * as yup from 'yup';
 import { connect } from 'react-redux';
-import { login } from 'redux/authReducer';
 import { Redirect } from 'react-router';
+import { login } from 'redux/authReducer';
+import * as yup from 'yup';
+import style from './Login.module.css';
 
 const validationScheme = yup.object().shape({
   email: yup.string().email('Enter correct email').required('Please enter email'),

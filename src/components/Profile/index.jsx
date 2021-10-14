@@ -1,7 +1,7 @@
 import React from 'react';
-import ProfileInfo from './ProfileInfo/index';
-import style from './Profile.module.css';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import style from './Profile.module.css';
+import ProfileInfo from './ProfileInfo/index';
 
 const Profile = (props) => {
   return (

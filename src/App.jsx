@@ -1,19 +1,18 @@
-import React from 'react';
-import './App.css';
-import { initializeApp } from 'redux/appReducer';
-
-import Navbar from 'components/Navbar/';
-import { Route, Switch } from 'react-router';
-import News from 'components/News/';
-import Music from 'components/Music/';
-import Settings from 'components/Settings/';
+import Preloader from 'components/common/Preloader';
 import AuthRedirectComponent from 'components/Dialogs';
-import UsersContainer from 'components/Users/UsersContainer';
-import ProfileContainer from 'components/Profile/ProfileContainer';
 import HeaderContainer from 'components/Header/HeaderContainer';
 import Login from 'components/Login';
+import Music from 'components/Music/';
+import Navbar from 'components/Navbar/';
+import News from 'components/News/';
+import ProfileContainer from 'components/Profile/ProfileContainer';
+import Settings from 'components/Settings/';
+import UsersContainer from 'components/Users/UsersContainer';
+import React from 'react';
 import { connect } from 'react-redux';
-import Preloader from 'components/common/Preloader';
+import { Route, Switch } from 'react-router';
+import { initializeApp } from 'redux/appReducer';
+import './App.css';
 
 class App extends React.Component {
   componentDidMount() {
