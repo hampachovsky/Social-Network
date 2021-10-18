@@ -8,7 +8,7 @@ const validationScheme = yup.object().shape({
   postValue: yup.string().min(8, '8 Char min').max(300, '300 Char max'),
 });
 
-const MyPosts = (props) => {
+const MyPosts = React.memo((props) => {
   const postElements = props.profilePage.postData.map((p) => (
     <Post key={p.id} text={p.text} likeCount={p.likeCount} />
   ));
@@ -50,7 +50,7 @@ const MyPosts = (props) => {
       </div>
     </div>
   );
-};
+});
 
 const PostInput = ({ field, form, ...props }) => (
   <input {...field} className={style.postValueInput} placeholder="Post text" />

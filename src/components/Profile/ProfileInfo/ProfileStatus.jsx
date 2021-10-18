@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import style from './ProfileInfo.module.css';
 
 function ProfileStatus(props) {
   const [editMode, setEditMode] = useState(false);
@@ -13,14 +12,14 @@ function ProfileStatus(props) {
     <div>
       {!editMode ? (
         <div>
-          <p onDoubleClick={() => setEditMode(true)} className={style.aboutMe}>
+          <p onDoubleClick={() => setEditMode(true)} className={props.style.aboutMe}>
             {props.status ? props.status : 'No status'}
           </p>
         </div>
       ) : (
-        <div className={style.profileStatusInputContainer}>
+        <div className={props.style.profileStatusInputContainer}>
           <input
-            className={style.profileStatusInput}
+            className={props.style.profileStatusInput}
             autoFocus={true}
             onChange={(e) => setStatus(e.target.value)}
             onBlur={() => {

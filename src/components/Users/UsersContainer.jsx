@@ -3,12 +3,7 @@ import withAuthRedirect from 'hoc/withAuthRedirect';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import {
-  getCurrentPage,
-  requestUsers,
-  toggleFollowedStatus,
-  toggleFollowingProgress,
-} from 'redux/usersReducer';
+import { getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
 import Users from '.';
 import {
   getUsersCurrentPageSelector,
@@ -59,7 +54,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps, {
-    toggleFollowingProgress,
     requestUsers,
     getCurrentPage,
     toggleFollowedStatus,

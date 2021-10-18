@@ -1,0 +1,12 @@
+.pageList {
+  display: flex;
+  justify-content: center;
+}
+
+.pageList span {
+  padding: 10px;
+}
+
+.selectedPage {
+  font-weight: 800;
+}

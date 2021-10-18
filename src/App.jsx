@@ -28,15 +28,17 @@ class App extends React.Component {
         <HeaderContainer />
         <Navbar />
         <Switch>
-          <Route path="/login" render={() => <Login />} />
-          <div className="app-wrapper-content">
-            <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-            <Route path="/messages" render={() => <AuthRedirectComponent />} />
-            <Route path="/users" render={() => <UsersContainer />} />
-            <Route path="/news" component={News} />
-            <Route path="/music" component={Music} />
-            <Route path="/settings" component={Settings} />
-          </div>
+          <>
+            <Route path="/login" render={() => <Login />} />
+            <div className="app-wrapper-content">
+              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+              <Route path="/messages" render={() => <AuthRedirectComponent />} />
+              <Route path="/users" render={() => <UsersContainer />} />
+              <Route path="/news" component={News} />
+              <Route path="/music" component={Music} />
+              <Route path="/settings" component={Settings} />
+            </div>
+          </>
         </Switch>
       </div>
     );
