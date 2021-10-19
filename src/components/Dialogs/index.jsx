@@ -1,4 +1,3 @@
-import withAuthRedirect from 'hoc/withAuthRedirect';
 import React from 'react';
 import ChatContainer from './Chat/ChatContainer';
 import ChatListContainer from './ChatList/ChatListContainer';
@@ -20,4 +19,4 @@ const Dialogs = () => {
   );
 };
 
-export default withAuthRedirect(Dialogs);
+export default Dialogs;

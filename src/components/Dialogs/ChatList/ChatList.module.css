@@ -1,6 +1,7 @@
 .chatList {
+  box-sizing: border-box;
   border-right: 1px solid #e5e7eb;
-  width: 33.333333%;
+  width: 20%;
 }
 
 .listItems {
@@ -9,15 +10,17 @@
 }
 
 .searchBarContainer {
+  width: 80%;
   border-bottom: 1px solid #e5e7eb;
   display: flex;
   padding: 10px;
 }
 
 .searchBar {
-  width: 280px;
+  width: 80%;
   height: 30px;
   padding: 10px;
+  margin-right: 3rem;
   background-color: #f3f4f6;
   border: 1px solid #f3f4f6;
   border-radius: 10px;

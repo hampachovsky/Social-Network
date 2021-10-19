@@ -1,19 +1,22 @@
-body {
-  background-color: #f0f2f5;
-}
-
 .app-wrapper {
-  display: grid;
-  height: 100vh;
-  grid-template-areas: 'h h' 'n c';
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 1fr 30fr;
-  grid-gap: 10px;
+  /* display: flex;
+  width: 100%;
+  flex-direction: row;
+  height: 100%;*/
+  min-height: 100vh;
 }
 
+.wrap-whole {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  height: 100vh;
+}
 .app-wrapper-content {
-  margin-left: 400px;
+  margin-top: 3rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
   background-color: #fff;
-  width: calc(100% - 100px); /* 300px*/
-  margin-bottom: 80px;
+  flex: 1 1 600px;
+  overflow-y: auto;
 }

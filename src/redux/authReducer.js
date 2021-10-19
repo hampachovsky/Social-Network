@@ -63,6 +63,6 @@ const logout = () => async (dispatch) => {
   }
 };
 
-export { getAuthUser, login, logout };
+export { getAuthUser, login, logout, setUserData, setFormError };
 
 export default authReducer;

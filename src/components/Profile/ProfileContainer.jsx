@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import { compose } from 'redux';
 import { getUserProfile, getUserStatus, updateUserStatus } from 'redux/profileReducer';
 import Profile from '.';
@@ -16,7 +16,6 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
-    if (!this.props.isAuth) return <Redirect to="/login" />;
     return (
       <>
         <Profile

@@ -1,18 +1,16 @@
 import Preloader from 'components/common/Preloader';
-import AuthRedirectComponent from 'components/Dialogs';
 import HeaderContainer from 'components/Header/HeaderContainer';
 import Login from 'components/Login';
-import Music from 'components/Music/';
 import Navbar from 'components/Navbar/';
-import News from 'components/News/';
-import ProfileContainer from 'components/Profile/ProfileContainer';
-import Settings from 'components/Settings/';
-import UsersContainer from 'components/Users/UsersContainer';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { initializeApp } from 'redux/appReducer';
 import './App.css';
+
+const ProfileContainer = React.lazy(() => import('components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('components/Users/UsersContainer'));
+const Dialogs = React.lazy(() => import('components/Dialogs'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -23,23 +21,29 @@ class App extends React.Component {
     if (!this.props.initialized) {
       return <Preloader />;
     }
+    if (!this.props.isAuth) return <Login />;
     return (
       <div className="app-wrapper">
         <HeaderContainer />
-        <Navbar />
-        <Switch>
-          <>
-            <Route path="/login" render={() => <Login />} />
+        <div className="wrap-whole">
+          <Navbar />
+          <Suspense fallback={<Preloader />}>
             <div className="app-wrapper-content">
-              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-              <Route path="/messages" render={() => <AuthRedirectComponent />} />
-              <Route path="/users" render={() => <UsersContainer />} />
-              <Route path="/news" component={News} />
-              <Route path="/music" component={Music} />
-              <Route path="/settings" component={Settings} />
+              <Switch>
+                <Route path="/" exact>
+                  <Redirect to="/profile" />
+                </Route>
+                <Route path="/login" exact>
+                  <Redirect to="/profile" />
+                </Route>
+                <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+                <Route path="/messages" render={() => <Dialogs />} />
+                <Route path="/users" render={() => <UsersContainer />} />
+                <Route render={() => <h1>404 NOT FOUND</h1>} />
+              </Switch>
             </div>
-          </>
-        </Switch>
+          </Suspense>
+        </div>
       </div>
     );
   }
@@ -47,6 +51,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
+  isAuth: state.auth.isAuth,
 });
 
 export default connect(mapStateToProps, { initializeApp })(App);

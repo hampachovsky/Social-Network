@@ -1,29 +1,47 @@
 .sidebar {
-  position: fixed;
-  background-color: #fff;
+  display: flex;
+  justify-content: flex-start;
   height: 100%;
-  width: 100px;
-  z-index: 100;
-  padding-bottom: 30px;
-  overflow: hidden;
+  flex: 0 0 100px;
+  flex-flow: column nowrap;
+  text-align: center;
+  z-index: 30;
+  background: #fff;
+  padding: 1rem 0 0 0;
+  border-right: 1px solid #e5e7eb;
 }
 
 .nav {
   padding-left: 10px;
   padding-top: 100px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .item {
   color: #707070;
   text-decoration: none;
+  transition: opacity 0.2s, visibility 0.2s;
+  flex: 1 1 auto;
+  align-self: center;
+  font-size: 18px;
+  display: flex;
+  position: relative;
 }
 
 .activeLink {
-  color: #be185d;
+  color: rgb(37, 99, 235);
 }
 
 .sidebar img {
   padding-left: 10px;
   padding-top: 3px;
   width: 60px;
+  transition: opacity 0.2s, visibility 0.2s;
+  flex: 1 1 auto;
+  align-self: center;
+  display: flex;
+  position: relative;
 }

@@ -1,23 +1,27 @@
 .header {
-  grid-area: h;
-  width: 100%;
   max-width: 100%;
-  background-color: #fff;
+  z-index: 99;
+  height: 60px;
+  background: #fff;
   display: flex;
   justify-content: flex-end;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 99;
   border-bottom: 1px solid #e5e7eb;
+  flex-flow: row nowrap;
 }
 
 .loginContainer {
   display: flex;
-  justify-content: center;
   margin-left: auto;
-  padding-right: 1rem;
-  align-items: center;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+}
+
+.loginContainer a {
+  text-decoration: none;
+  padding: 0 15px;
+  color: rgb(37, 99, 235);
+  line-height: 60px;
 }
 
 .login {

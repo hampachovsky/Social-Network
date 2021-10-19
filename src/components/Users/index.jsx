@@ -6,12 +6,6 @@ import style from './Users.module.css';
 const Users = (props) => {
   return (
     <div className={style.usersAppContainer}>
-      <Paginator
-        totalUsersCount={props.totalUsersCount}
-        pageSize={props.pageSize}
-        currentPage={props.currentPage}
-        onPageChanged={props.onPageChanged}
-      />
       <h1>Users</h1>
       {props.users.map((u) => (
         <User
@@ -21,8 +15,13 @@ const Users = (props) => {
           followingInProgress={props.followingInProgress}
         />
       ))}
-      <div className={style.showMoreBtnContainer}>
-        <button className={style.showMoreBtn}>Show More</button>
+      <div className={style.paginatorConainer}>
+        <Paginator
+          totalItemsCount={props.totalUsersCount}
+          pageSize={props.pageSize}
+          currentPage={props.currentPage}
+          onPageChanged={props.onPageChanged}
+        />
       </div>
     </div>
   );
