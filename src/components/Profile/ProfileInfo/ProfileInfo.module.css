@@ -204,3 +204,17 @@
   font-size: 15px !important;
   font-weight: 700 !important;
 }
+
+.photoUploadConainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+  align-items: center;
+}
+
+.saveBtnContainer {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

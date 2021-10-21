@@ -19,19 +19,6 @@ const validationScheme = yup.object().shape({
 
 const ProfileDataForm = (props) => {
   const [newPhotoFile, setPhotoFile] = useState();
-  const [errorForm, setErrorForm] = useState(null);
-
-  const contactElement = Object.keys(props.profile.contacts).map((key) => {
-    return (
-      <ContactField
-        key={key}
-        contactTitle={key}
-        contactValue={props.profile.contacts[key]}
-        editMode={true}
-        style={style}
-      />
-    );
-  });
 
   const initialData = {
     ...props.profile,
@@ -68,12 +55,12 @@ const ProfileDataForm = (props) => {
             actions.setSubmitting(false);
             props.toggleEditMode();
           } catch (error) {
-            setErrorForm(error);
+            actions.setStatus(error);
             actions.setSubmitting(false);
           }
         }}
       >
-        {({ values, isValid, isSubmitting, handleSubmit }) => (
+        {({ values, isValid, isSubmitting, status, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <div>
               <ErrorMessage component="p" className={style.error} name="fullName" />
@@ -101,17 +88,22 @@ const ProfileDataForm = (props) => {
                 className={style.lookingForAJobDescription}
               />
             </div>
-            {errorForm && <p className={style.error}>{errorForm}</p>}
-            <div className={style.contactFieldConainer}>{contactElement}</div>
-            <input
-              type="file"
-              name="photos.large"
-              className={style.fileInput}
-              onChange={onMainFotoSelected}
-            />
-            <button disabled={!isValid || isSubmitting} type="submit" className={style.saveBtn}>
-              Save
-            </button>
+            {status && <p className={style.error}>{status}</p>}
+
+            <ContactFields contacts={props.profile.contacts} />
+            <div className={style.photoUploadConainer}>
+              <input
+                type="file"
+                name="photos.large"
+                className={style.fileInput}
+                onChange={onMainFotoSelected}
+              />
+            </div>
+            <div className={style.saveBtnContainer}>
+              <button disabled={!isValid || isSubmitting} type="submit" className={style.saveBtn}>
+                Save
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
@@ -119,13 +111,18 @@ const ProfileDataForm = (props) => {
   );
 };
 
-const ContactField = ({ contactTitle, contactValue, editMode = false, style }) => {
-  if (contactValue === null && !editMode) return null;
+const ContactFields = ({ contacts }) => {
   return (
-    <div>
-      <ErrorMessage component="p" className={style.error} name={'contacts.' + contactTitle} />
-      <label htmlFor={'contacts.' + contactTitle}>{contactTitle}</label>
-      <Field type="text" name={'contacts.' + contactTitle} className={style.contactField} />
+    <div className={style.contactFieldConainer}>
+      {Object.keys(contacts).map((key) => {
+        return (
+          <div key={key}>
+            <ErrorMessage component="p" className={style.error} name={'contacts.' + key} />
+            <label htmlFor={'contacts.' + key}>{key}</label>
+            <Field type="text" name={'contacts.' + key} className={style.contactField} />
+          </div>
+        );
+      })}
     </div>
   );
 };

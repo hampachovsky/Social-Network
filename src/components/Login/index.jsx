@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { login } from 'redux/authReducer';
@@ -9,8 +9,16 @@ import style from './Login.module.css';
 const validationScheme = yup.object().shape({
   email: yup.string().email('Enter correct email').required('Please enter email'),
   password: yup.string().min(8, '8 Char min').required('Please enter password'),
+  /* error: yup.boolean(),
+  captcha: yup.string().when('error', {
+    is: () => true,
+    then: yup.string().required('Please enter captcha'),
+  }),*/
 });
+
 const Login = (props) => {
+  const [captcha, setCaptcha] = useState(null);
+
   if (props.isAuth) return <Redirect to="/profile" />;
   return (
     <div className={style.loginFormWrapper}>
@@ -19,27 +27,44 @@ const Login = (props) => {
           email: '',
           password: '',
           rememberMe: false,
+          captcha: '',
         }}
         validateOnBlur
         validationSchema={validationScheme}
-        onSubmit={(values, actions) => {
-          props.login(values.email, values.password, values.rememberMe);
-          actions.setSubmitting(false);
-          actions.resetForm({
-            values: {
-              email: '',
-              password: '',
-              rememberMe: false,
-            },
-          });
+        onSubmit={async (values, actions) => {
+          try {
+            await props.login(values.email, values.password, values.rememberMe, values.captcha);
+            actions.setSubmitting(false);
+            actions.resetForm({
+              values: {
+                email: '',
+                password: '',
+                captcha: '',
+                rememberMe: false,
+              },
+            });
+          } catch ({ captcha, error }) {
+            setCaptcha(captcha);
+            actions.setStatus(error);
+            actions.setSubmitting(false);
+          }
         }}
       >
-        {({ values, dirty, isValid, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
+        {({
+          values,
+          dirty,
+          isValid,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          status,
+        }) => (
           <Form onSubmit={handleSubmit} className={style.loginFormConainer}>
             <h1>Log in</h1>
             <p>Email and password</p>
             <div className={style.inputContainer}>
-              {props.formError && <p className={style.error}>{props.formError}</p>}
+              {!!status && <p className={style.error}>{status}</p>}
               <ErrorMessage component={`p`} className={style.error} name={`email`} />
               <Field
                 className={style.email}
@@ -66,6 +91,25 @@ const Login = (props) => {
               <Field className={style.checkbox} name={`rememberMe`} type="checkbox" />
               <label htmlFor="rememberme">Remember me </label>
             </div>
+
+            {captcha ? (
+              <div className={style.captchaContainer}>
+                <img alt="" src={captcha} />
+                <div>
+                  <ErrorMessage component={`p`} className={style.error} name={`captcha`} />
+                  <Field
+                    className={style.captchaInput}
+                    name={`captcha`}
+                    type="text"
+                    placeholder="Captcha"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.captcha}
+                  />
+                </div>
+              </div>
+            ) : null}
+
             <button
               disabled={(!dirty && isValid) || isSubmitting}
               type={`submit`}
@@ -83,7 +127,6 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.isAuth,
-    formError: state.auth.formError,
   };
 };
 
