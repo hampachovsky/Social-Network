@@ -1,36 +1,51 @@
 import Preloader from 'components/common/Preloader';
-import React from 'react';
+import React, { useState } from 'react';
 import userPhoto from '../../../assets/images/user_img.png';
 import style from './ProfileInfo.module.css';
-import ProfileStatus from './ProfileStatus';
+import ProfileDataForm from './ProfileDataForm';
+import ProfileData from './ProfileData';
 
 const ProfileInfo = (props) => {
+  const [editMode, setEditMode] = useState(false);
   if (!props.profile) return <Preloader />;
+
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
   return (
-    <div className={style.profileContainer}>
-      <div className={style.profileImageContainer}>
-        <img
-          className={style.profileImage}
-          src={props.profile.photos.large ? props.profile.photos.large : userPhoto}
-          alt=""
-        />
+    <>
+      {props.isOwner && (
+        <div className={style.editBtnContainer}>
+          <button disabled={editMode} onClick={toggleEditMode} className={style.editBtn}>
+            Edit Profile
+          </button>
+        </div>
+      )}
+      <div className={style.profileContainer}>
+        <div className={style.profileImageContainer}>
+          <img
+            className={style.profileImage}
+            src={props.profile.photos.large ? props.profile.photos.large : userPhoto}
+            alt=""
+          />
+        </div>
+        <div className={style.infoContainer}>
+          {editMode ? (
+            <ProfileDataForm
+              profile={props.profile}
+              status={props.status}
+              updateUserStatus={props.updateUserStatus}
+              setUserPhoto={props.setUserPhoto}
+              saveProfile={props.saveProfile}
+              toggleEditMode={toggleEditMode}
+            />
+          ) : (
+            <ProfileData profile={props.profile} status={props.status} />
+          )}
+        </div>
       </div>
-      <div className={style.infoContainer}>
-        <h2 className={style.fullName}>{props.profile.fullName}</h2>
-        <p className={style.aboutMe}>About me: {props.profile.aboutMe}</p>
-        <ProfileStatus updateUserStatus={props.updateUserStatus} status={props.status} />
-        {props.profile.lookingForAJob ? (
-          <div className={style.jobDescriptionContainer}>
-            <p className={style.jobFindStatus}>Work: in active search</p>
-            <p className={style.jobFindDescription}>
-              Description: {props.profile.lookingForAJobDescription}
-            </p>
-          </div>
-        ) : (
-          <p className={style.jobFindStatus}>Work: in active search</p>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 

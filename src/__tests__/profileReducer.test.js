@@ -38,4 +38,8 @@ describe('profile reducer', () => {
 
     expect(newState.postData.length).toBe(4);
   });
+  it('state should be returned whitout changes', () => {
+    const newState = profileReducer(state, { type: 'w' });
+    expect(newState.postData).toEqual(state.postData);
+  });
 });

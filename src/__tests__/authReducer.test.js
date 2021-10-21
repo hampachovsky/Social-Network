@@ -24,4 +24,8 @@ describe('auth reducer', () => {
     const newState = authReducer(state, action);
     expect(newState.formError).toEqual('test error');
   });
+  it('state should be returned whitout changes', () => {
+    const newState = authReducer(state, { type: 'w' });
+    expect(newState).toEqual(state);
+  });
 });

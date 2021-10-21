@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import ProfileStatus from 'components/Profile/ProfileInfo/ProfileStatus';
+import ProfileStatus from 'z OldFunc/ProfileStatus';
 
 const props = {
   status: 'test status',

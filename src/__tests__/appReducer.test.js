@@ -10,4 +10,8 @@ describe('app reducer', () => {
     const newState = appReducer(state, initializedSuccess());
     expect(newState.initialized).toBe(true);
   });
+  it('state should be returned whitout changes', () => {
+    const newState = appReducer(state, { type: 'w' });
+    expect(newState).toEqual(state);
+  });
 });
