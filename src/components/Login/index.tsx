@@ -1,8 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Redirect } from 'react-router';
 import { login } from 'redux/authReducer';
+import { AppStateType } from 'redux/reduxStore';
 import * as yup from 'yup';
 import style from './Login.module.css';
 
@@ -16,19 +17,27 @@ const validationScheme = yup.object().shape({
   }),*/
 });
 
-const Login = (props) => {
-  const [captcha, setCaptcha] = useState(null);
+type FormInitialValuesType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: string;
+};
 
-  if (props.isAuth) return <Redirect to="/profile" />;
+const Login: React.FC<PropsFromRedux> = (props) => {
+  const [captcha, setCaptcha] = useState<string | null>(null);
+  const initialValues: FormInitialValuesType = {
+    email: '',
+    password: '',
+    rememberMe: false,
+    captcha: '',
+  };
+
+  if (props.isAuth) return <Redirect to="/profile " />;
   return (
     <div className={style.loginFormWrapper}>
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          rememberMe: false,
-          captcha: '',
-        }}
+        initialValues={initialValues}
         validateOnBlur
         validationSchema={validationScheme}
         onSubmit={async (values, actions) => {
@@ -43,7 +52,9 @@ const Login = (props) => {
                 rememberMe: false,
               },
             });
-          } catch ({ captcha, error }) {
+          } catch (formError: any) {
+            const captcha: string | null = formError.captcha;
+            const error: string | null = formError.error;
             setCaptcha(captcha);
             actions.setStatus(error);
             actions.setSubmitting(false);
@@ -124,10 +135,14 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     isAuth: state.auth.isAuth,
   };
 };
 
-export default connect(mapStateToProps, { login })(Login);
+const connector = connect(mapStateToProps, { login });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Login);

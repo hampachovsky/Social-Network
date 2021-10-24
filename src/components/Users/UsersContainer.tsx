@@ -1,6 +1,7 @@
 import Preloader from 'components/common/Preloader';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { AppStateType } from 'redux/reduxStore';
 import { getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
 import Users from '.';
 import {
@@ -10,14 +11,14 @@ import {
   getUsersPageSizeSelector,
   getUsersSelector,
   getUsersTotalUsersCountSelector,
-} from './../../redux/usersSelector';
+} from '../../redux/usersSelector';
 
-class UsersAPIComponent extends React.Component {
+class UsersAPIComponent extends React.Component<PropsFromRedux> {
   componentDidMount() {
     this.props.requestUsers(this.props.currentPage, this.props.pageSize);
   }
 
-  onPageChanged = (page) => {
+  onPageChanged = (page: number) => {
     this.props.getCurrentPage(page, this.props.pageSize);
   };
 
@@ -39,7 +40,7 @@ class UsersAPIComponent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     users: getUsersSelector(state),
     pageSize: getUsersPageSizeSelector(state),
@@ -50,8 +51,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
+const connector = connect(mapStateToProps, {
   requestUsers,
   getCurrentPage,
   toggleFollowedStatus,
-})(UsersAPIComponent);
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export default connector(UsersAPIComponent);

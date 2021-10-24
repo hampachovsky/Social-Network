@@ -1,3 +1,5 @@
+import { DialogsUserType, MessagesType } from 'types/types';
+
 const SEND_MESSAGE = 'dialogs/SEND-MESSAGE';
 
 const initialState = {
@@ -41,7 +43,7 @@ const initialState = {
       photoUrl:
         'https://cdn-imgix.headout.com/tour/7064/TOUR-IMAGE/44a6d6c4-86fd-4f93-8204-7ffd4fa4e4e4-4445-IMGWorldsofAdventure-2.JPG',
     },
-  ],
+  ] as Array<DialogsUserType>,
   messages: [
     {
       content: 'hello world',
@@ -93,12 +95,14 @@ const initialState = {
       date: '13.09.2021',
     },
     {
+      author: 'user3',
       content: 'new message user 3',
       recipient: 'user1',
       owner: false,
       date: '12.08.2021',
     },
     {
+      author: 'user3',
       content: 'wind',
       recipient: 'user1',
       owner: false,
@@ -125,10 +129,12 @@ const initialState = {
       owner: false,
       date: '09.07.2021',
     },
-  ],
+  ] as Array<MessagesType>,
 };
 
-const dialogsReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case SEND_MESSAGE: {
       return {
@@ -136,8 +142,8 @@ const dialogsReducer = (state = initialState, action) => {
         messages: [
           ...state.messages,
           {
-            content: action.newMessageBody,
-            recipient: `user${action.id}`,
+            content: action.payload.newMessageBody,
+            recipient: `user${action.payload.userid}`,
             owner: true,
             author: `user1`,
             date: '10.11.2020',
@@ -152,10 +158,22 @@ const dialogsReducer = (state = initialState, action) => {
   }
 };
 
-const sendMessage = (newMessageBody) => ({
+type SendMessagePayloadType = {
+  id: string;
+  newMessageBody: string;
+};
+
+type SendMessageActionType = {
+  type: typeof SEND_MESSAGE;
+  payload: SendMessagePayloadType;
+};
+
+const sendMessage = (newMessageBody: string): SendMessageActionType => ({
   type: SEND_MESSAGE,
-  id: 1,
-  newMessageBody,
+  payload: {
+    id: '1',
+    newMessageBody,
+  },
 });
 
 export { sendMessage };

@@ -27,7 +27,7 @@ const authAPI = {
   me() {
     return instance.get('auth/me').then((response) => response.data);
   },
-  login(email, password, rememberMe = false, captcha = false) {
+  login(email, password, rememberMe = false, captcha = null) {
     return instance.post('auth/login', { email, password, rememberMe, captcha });
   },
   logout() {

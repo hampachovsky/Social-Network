@@ -1,9 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { UserType } from 'types/types';
 import userPhoto from '../../../assets/images/user_img.png';
 import style from './User.module.css';
 
-const User = ({ user, toggleFollowedStatus, followingInProgress }) => {
+type PropsType = {
+  user: UserType;
+  toggleFollowedStatus: (followed: boolean, id: number) => void;
+  followingInProgress: Array<number>;
+};
+
+const User: React.FC<PropsType> = ({ user, toggleFollowedStatus, followingInProgress }) => {
   return (
     <>
       <div className={style.usersContainer}>
