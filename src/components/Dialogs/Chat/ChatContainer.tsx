@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { sendMessage } from 'redux/dialogsReducer';
+import { AppStateType } from 'redux/reduxStore';
 import Chat from '.';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
-    dialogsPage: state.dialogsPage,
+    messages: state.dialogsPage.messages,
+    userData: state.dialogsPage.userData,
   };
 };
 

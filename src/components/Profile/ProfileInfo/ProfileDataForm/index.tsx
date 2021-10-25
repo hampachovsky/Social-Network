@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
+import { ContactsType, ProfileType } from 'types/types';
 import * as yup from 'yup';
 import style from '../ProfileInfo.module.css';
 
@@ -17,25 +18,45 @@ const validationScheme = yup.object().shape({
   }),
 });
 
-const ProfileDataForm = (props) => {
-  const [newPhotoFile, setPhotoFile] = useState();
+type PropsType = {
+  profile: ProfileType;
+  status: string;
+  toggleEditMode: () => void;
+  updateUserStatus: (status: string) => void;
+  setUserPhoto: (file: any) => void;
+  saveProfile: (profile: ProfileType) => void;
+};
 
-  const initialData = {
-    ...props.profile,
+interface FormInitialValuesType extends ProfileType {
+  status: string;
+}
+
+const ProfileDataForm: React.FC<PropsType> = ({
+  profile,
+  status,
+  toggleEditMode,
+  updateUserStatus,
+  setUserPhoto,
+  saveProfile,
+}) => {
+  const [newPhotoFile, setPhotoFile] = useState<any>();
+
+  const initialValues: FormInitialValuesType = {
+    ...profile,
     contacts: {
-      facebook: props.profile.contacts.facebook ? props.profile.contacts.facebook : '',
-      vk: props.profile.contacts.vk ? props.profile.contacts.vk : '',
-      github: props.profile.contacts.github ? props.profile.contacts.github : '',
-      instagram: props.profile.contacts.instagram ? props.profile.contacts.instagram : '',
-      mainLink: props.profile.contacts.mainLink ? props.profile.contacts.mainLink : '',
-      twitter: props.profile.contacts.twitter ? props.profile.contacts.twitter : '',
-      website: props.profile.contacts.website ? props.profile.contacts.website : '',
-      youtube: props.profile.contacts.youtube ? props.profile.contacts.youtube : '',
+      facebook: profile.contacts.facebook ? profile.contacts.facebook : '',
+      vk: profile.contacts.vk ? profile.contacts.vk : '',
+      github: profile.contacts.github ? profile.contacts.github : '',
+      instagram: profile.contacts.instagram ? profile.contacts.instagram : '',
+      mainLink: profile.contacts.mainLink ? profile.contacts.mainLink : '',
+      twitter: profile.contacts.twitter ? profile.contacts.twitter : '',
+      website: profile.contacts.website ? profile.contacts.website : '',
+      youtube: profile.contacts.youtube ? profile.contacts.youtube : '',
     },
-    status: props.status,
+    status: status,
   };
 
-  const onMainFotoSelected = (e) => {
+  const onMainFotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       setPhotoFile(e.target.files[0]);
     }
@@ -44,16 +65,16 @@ const ProfileDataForm = (props) => {
   return (
     <>
       <Formik
-        initialValues={initialData}
+        initialValues={initialValues}
         validateOnBlur
         validationSchema={validationScheme}
         onSubmit={async (values, actions) => {
           try {
-            await props.saveProfile(values);
-            props.updateUserStatus(values.status);
-            newPhotoFile && props.setUserPhoto(newPhotoFile);
+            await saveProfile(values);
+            updateUserStatus(values.status);
+            newPhotoFile && setUserPhoto(newPhotoFile);
             actions.setSubmitting(false);
-            props.toggleEditMode();
+            toggleEditMode();
           } catch (error) {
             actions.setStatus(error);
             actions.setSubmitting(false);
@@ -90,7 +111,7 @@ const ProfileDataForm = (props) => {
             </div>
             {status && <p className={style.error}>{status}</p>}
 
-            <ContactFields contacts={props.profile.contacts} />
+            <ContactFields contacts={profile.contacts} />
             <div className={style.photoUploadConainer}>
               <input
                 type="file"
@@ -111,7 +132,11 @@ const ProfileDataForm = (props) => {
   );
 };
 
-const ContactFields = ({ contacts }) => {
+type ContactsFieldPropsType = {
+  contacts: ContactsType;
+};
+
+const ContactFields: React.FC<ContactsFieldPropsType> = ({ contacts }) => {
   return (
     <div className={style.contactFieldConainer}>
       {Object.keys(contacts).map((key) => {

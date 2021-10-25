@@ -15,7 +15,7 @@ const initialState = {
     { id: 3, text: "I'm here", likeCount: 51 },
   ] as Array<PostDataType>,
   status: '',
-  profile: null as Array<ProfileType> | null,
+  profile: null as ProfileType | null,
 };
 
 export type InitialStateType = typeof initialState;
@@ -47,7 +47,7 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
     case SAVE_PHOTO_SUCCSESS: {
       return {
         ...state,
-        profile: { ...state.profile, photos: action.photos } as Array<ProfileType>,
+        profile: { ...state.profile, photos: action.photos } as ProfileType,
       };
     }
     default: {
@@ -100,12 +100,12 @@ const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessActionType => ({
   photos,
 });
 
-const getUserProfile = (id: number) => async (dispatch: any) => {
+const getUserProfile = (id: number | null) => async (dispatch: any) => {
   const data = await profileAPI.getUser(id);
   dispatch(setUserProfile(data));
 };
 
-const getUserStatus = (id: number) => async (dispatch: any) => {
+const getUserStatus = (id: number | null) => async (dispatch: any) => {
   const data = await profileAPI.getStatus(id);
   if (data.status === 200) {
     dispatch(setUserStatus(data.data));

@@ -4,10 +4,27 @@ import userPhoto from '../../../assets/images/user_img.png';
 import style from './ProfileInfo.module.css';
 import ProfileDataForm from './ProfileDataForm';
 import ProfileData from './ProfileData';
+import { ProfileType } from 'types/types';
 
-const ProfileInfo = (props) => {
+type PropsType = {
+  profile: ProfileType | null;
+  status: string;
+  isOwner: boolean;
+  updateUserStatus: (status: string) => void;
+  setUserPhoto: (file: any) => void;
+  saveProfile: (profile: ProfileType) => Promise<undefined>;
+};
+
+const ProfileInfo: React.FC<PropsType> = ({
+  profile,
+  isOwner,
+  status,
+  updateUserStatus,
+  setUserPhoto,
+  saveProfile,
+}) => {
   const [editMode, setEditMode] = useState(false);
-  if (!props.profile) return <Preloader />;
+  if (!profile) return <Preloader />;
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
@@ -15,7 +32,7 @@ const ProfileInfo = (props) => {
 
   return (
     <>
-      {props.isOwner && (
+      {isOwner && (
         <div className={style.editBtnContainer}>
           <button disabled={editMode} onClick={toggleEditMode} className={style.editBtn}>
             Edit Profile
@@ -26,22 +43,22 @@ const ProfileInfo = (props) => {
         <div className={style.profileImageContainer}>
           <img
             className={style.profileImage}
-            src={props.profile.photos.large ? props.profile.photos.large : userPhoto}
+            src={profile.photos.large ? profile.photos.large : userPhoto}
             alt=""
           />
         </div>
         <div className={style.infoContainer}>
           {editMode ? (
             <ProfileDataForm
-              profile={props.profile}
-              status={props.status}
-              updateUserStatus={props.updateUserStatus}
-              setUserPhoto={props.setUserPhoto}
-              saveProfile={props.saveProfile}
+              profile={profile}
+              status={status}
+              updateUserStatus={updateUserStatus}
+              setUserPhoto={setUserPhoto}
+              saveProfile={saveProfile}
               toggleEditMode={toggleEditMode}
             />
           ) : (
-            <ProfileData profile={props.profile} status={props.status} />
+            <ProfileData profile={profile} status={status} />
           )}
         </div>
       </div>

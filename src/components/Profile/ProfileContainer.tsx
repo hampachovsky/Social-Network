@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router';
 import {
   getUserProfile,
   getUserStatus,
@@ -9,13 +8,19 @@ import {
   setUserPhoto,
   saveProfile,
 } from 'redux/profileReducer';
+import { AppStateType } from 'redux/reduxStore';
 import Profile from '.';
 
-class ProfileContainer extends React.Component {
+type PathParamsType = {
+  userId: string;
+};
+
+type PropsType = RouteComponentProps<PathParamsType> & PropsFromRedux;
+class ProfileContainer extends React.Component<PropsType> {
   resetProfile = () => {
-    let userId = this.props.match.params.userId;
+    let userId = +this.props.match.params.userId;
     if (!userId) {
-      userId = this.props.authorizedId;
+      userId = this.props.authorizedId as number;
     }
     this.props.getUserProfile(userId);
     this.props.getUserStatus(userId);
@@ -24,7 +29,7 @@ class ProfileContainer extends React.Component {
   componentDidMount() {
     this.resetProfile();
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     if (this.props.match.params.userId !== prevProps.match.params.userId) {
       this.resetProfile();
     }
@@ -46,7 +51,7 @@ class ProfileContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
@@ -55,13 +60,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, {
-    getUserProfile,
-    updateUserStatus,
-    getUserStatus,
-    setUserPhoto,
-    saveProfile,
-  }),
-  withRouter
-)(ProfileContainer);
+const connector = connect(mapStateToProps, {
+  getUserProfile,
+  updateUserStatus,
+  getUserStatus,
+  setUserPhoto,
+  saveProfile,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+const ProfileContainerComponent = connector(withRouter(ProfileContainer));
+
+export default ProfileContainerComponent;

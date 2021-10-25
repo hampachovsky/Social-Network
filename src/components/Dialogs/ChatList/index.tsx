@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { DialogsUserType } from 'types/types';
 import style from './ChatList.module.css';
 import ListItem from './ListItem/index';
 
-const ChatList = (props) => {
+type PropsType = {
+  userData: Array<DialogsUserType>;
+};
+
+const ChatList: React.FC<PropsType> = ({ userData }) => {
   const [query, setQuery] = useState('');
-  const listElement = props.dialogsPage.userData.map((u) => (
+  const listElement = userData.map((u) => (
     <ListItem key={u.userId} userId={u.userId} username={u.username} photoUrl={u.photoUrl} />
   ));
   return (

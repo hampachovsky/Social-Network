@@ -3,16 +3,17 @@ import HeaderContainer from 'components/Header/HeaderContainer';
 import Login from 'components/Login';
 import Navbar from 'components/Navbar/';
 import React, { Suspense } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router';
 import { initializeApp } from 'redux/appReducer';
+import { AppStateType } from 'redux/reduxStore';
 import './App.css';
 
 const ProfileContainer = React.lazy(() => import('components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('components/Users/UsersContainer'));
 const Dialogs = React.lazy(() => import('components/Dialogs'));
 
-class App extends React.Component {
+class App extends React.Component<PropsFromRedux> {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -49,9 +50,13 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
   isAuth: state.auth.isAuth,
 });
 
-export default connect(mapStateToProps, { initializeApp })(App);
+const connector = connect(mapStateToProps, { initializeApp });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(App);

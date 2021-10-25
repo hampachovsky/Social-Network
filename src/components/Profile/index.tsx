@@ -1,9 +1,26 @@
 import React from 'react';
+import { ProfileType } from 'types/types';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import style from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/index';
 
-const Profile = ({ status, profile, updateUserStatus, isOwner, setUserPhoto, saveProfile }) => {
+type PropsType = {
+  profile: ProfileType | null;
+  status: string;
+  isOwner: boolean;
+  updateUserStatus: (status: string) => void;
+  setUserPhoto: (file: any) => void;
+  saveProfile: (profile: ProfileType) => Promise<undefined>;
+};
+
+const Profile: React.FC<PropsType> = ({
+  status,
+  profile,
+  updateUserStatus,
+  isOwner,
+  setUserPhoto,
+  saveProfile,
+}) => {
   return (
     <div className={style.profileContainer}>
       <ProfileInfo
