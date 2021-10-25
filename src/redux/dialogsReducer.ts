@@ -133,8 +133,9 @@ const initialState = {
 };
 
 export type InitialStateType = typeof initialState;
+type ActionsType = SendMessageActionType;
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case SEND_MESSAGE: {
       return {
@@ -143,7 +144,7 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
           ...state.messages,
           {
             content: action.payload.newMessageBody,
-            recipient: `user${action.payload.userid}`,
+            recipient: `user${action.payload.id}`,
             owner: true,
             author: `user1`,
             date: '10.11.2020',

@@ -53,3 +53,10 @@ export type MessagesType = {
   owner: boolean;
   date: string;
 };
+
+export type LoginRequestType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: string | null;
+};
