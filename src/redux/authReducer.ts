@@ -74,10 +74,9 @@ const getAuthUser = (): ThunkType => async (dispatch) => {
 };
 
 const getCaptchaUrl = (): ThunkType => async (dispatch) => {
-  const captchaUrl = await securityAPI.getCaptcha();
-  dispatch(setCaptcha(captchaUrl.data.url));
+  const data = await securityAPI.getCaptcha();
+  dispatch(setCaptcha(data.url));
 };
-
 const login =
   (request: LoginRequestType): ThunkType =>
   async (dispatch, getState) => {

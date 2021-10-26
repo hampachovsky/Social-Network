@@ -40,9 +40,9 @@ const Login: React.FC<PropsFromRedux> = (props) => {
         initialValues={initialValues}
         validateOnBlur
         validationSchema={validationScheme}
-        onSubmit={async (values, actions) => {
+        onSubmit={async ({ email, password, rememberMe, captcha }, actions) => {
           try {
-            await props.login(values.email, values.password, values.rememberMe, values.captcha);
+            await props.login({ email, password, rememberMe, captcha });
             actions.setSubmitting(false);
             actions.resetForm({
               values: {

@@ -1,5 +1,4 @@
 import usersAPI from 'api/usersAPI';
-import followAPI from 'api/followAPI';
 import { UserType } from '../types/types';
 import { AppThunk } from './reduxStore';
 import { ResultCodeEnum } from 'api/api';
@@ -139,7 +138,7 @@ const toggleFollowedStatus =
   (followed: boolean, id: number): ThunkType =>
   async (dispatch) => {
     dispatch(toggleFollowingProgress(true, id));
-    let data = followed ? await followAPI.unfollow(id) : await followAPI.follow(id);
+    let { data } = followed ? await usersAPI.unfollow(id) : await usersAPI.follow(id);
     if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(toggleFollow(id));
     }

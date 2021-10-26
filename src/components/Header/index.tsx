@@ -6,9 +6,9 @@ type PropsType = {
   id: number | null;
   login: string | null;
   isAuth: boolean;
-  getUserProfile: (id: number | null) => Promise<void>;
-  getUserStatus: (id: number | null) => Promise<void>;
-  logout: () => Promise<void>;
+  getUserProfile: (id: number) => void;
+  getUserStatus: (id: number) => void;
+  logout: () => void;
 };
 
 const Header: React.FC<PropsType> = ({
@@ -20,8 +20,8 @@ const Header: React.FC<PropsType> = ({
   logout,
 }) => {
   const onOpenProfile = () => {
-    getUserProfile(id);
-    getUserStatus(id);
+    getUserProfile(id as number);
+    getUserStatus(id as number);
   };
   return (
     <header className={style.header}>

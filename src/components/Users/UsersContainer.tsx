@@ -1,5 +1,5 @@
 import Preloader from 'components/common/Preloader';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from 'redux/reduxStore';
 import { getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
@@ -13,6 +13,36 @@ import {
   getUsersTotalUsersCountSelector,
 } from '../../redux/usersSelector';
 
+const UsersAPIComponent: React.FC<PropsFromRedux> = ({
+  pageSize,
+  currentPage,
+  requestUsers,
+  getCurrentPage,
+  isFetching,
+  ...props
+}) => {
+  useEffect(() => {
+    requestUsers(currentPage, pageSize);
+  }, []);
+  const onPageChanged = (page: number) => {
+    getCurrentPage(page, pageSize);
+  };
+  return (
+    <>
+      {isFetching ? <Preloader /> : null}
+      <Users
+        totalUsersCount={props.totalUsersCount}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChanged={onPageChanged}
+        users={props.users}
+        followingInProgress={props.followingInProgress}
+        toggleFollowedStatus={props.toggleFollowedStatus}
+      />
+    </>
+  );
+};
+/*
 class UsersAPIComponent extends React.Component<PropsFromRedux> {
   componentDidMount() {
     this.props.requestUsers(this.props.currentPage, this.props.pageSize);
@@ -39,7 +69,7 @@ class UsersAPIComponent extends React.Component<PropsFromRedux> {
     );
   }
 }
-
+*/
 const mapStateToProps = (state: AppStateType) => {
   return {
     users: getUsersSelector(state),

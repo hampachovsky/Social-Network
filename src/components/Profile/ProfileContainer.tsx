@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import {
@@ -16,40 +16,33 @@ type PathParamsType = {
 };
 
 type PropsType = RouteComponentProps<PathParamsType> & PropsFromRedux;
-class ProfileContainer extends React.Component<PropsType> {
-  resetProfile = () => {
-    let userId = +this.props.match.params.userId;
+
+const ProfileContainer: React.FC<PropsType> = ({
+  match,
+  getUserProfile,
+  getUserStatus,
+  authorizedId,
+  ...props
+}) => {
+  useEffect(() => {
+    let userId = +match.params.userId;
     if (!userId) {
-      userId = this.props.authorizedId as number;
+      userId = authorizedId as number;
     }
-    this.props.getUserProfile(userId);
-    this.props.getUserStatus(userId);
-  };
-
-  componentDidMount() {
-    this.resetProfile();
-  }
-  componentDidUpdate(prevProps: any) {
-    if (this.props.match.params.userId !== prevProps.match.params.userId) {
-      this.resetProfile();
-    }
-  }
-
-  render() {
-    return (
-      <>
-        <Profile
-          isOwner={!this.props.match.params.userId}
-          updateUserStatus={this.props.updateUserStatus}
-          profile={this.props.profile}
-          status={this.props.status}
-          setUserPhoto={this.props.setUserPhoto}
-          saveProfile={this.props.saveProfile}
-        />
-      </>
-    );
-  }
-}
+    getUserProfile(userId);
+    getUserStatus(userId);
+  }, [match, getUserProfile, getUserStatus, authorizedId]);
+  return (
+    <Profile
+      isOwner={!match.params.userId}
+      updateUserStatus={props.updateUserStatus}
+      profile={props.profile}
+      status={props.status}
+      setUserPhoto={props.setUserPhoto}
+      saveProfile={props.saveProfile}
+    />
+  );
+};
 
 const mapStateToProps = (state: AppStateType) => {
   return {

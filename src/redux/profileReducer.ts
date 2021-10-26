@@ -110,26 +110,24 @@ const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessActionType => ({
 });
 
 const getUserProfile =
-  (id: number | null): ThunkType =>
+  (id: number): ThunkType =>
   async (dispatch) => {
     const data = await profileAPI.getUser(id);
     dispatch(setUserProfile(data));
   };
 
 const getUserStatus =
-  (id: number | null): ThunkType =>
+  (id: number): ThunkType =>
   async (dispatch) => {
     const data = await profileAPI.getStatus(id);
-    if (data.status === 200) {
-      dispatch(setUserStatus(data.data));
-    }
+    dispatch(setUserStatus(data));
   };
 
 const updateUserStatus =
   (status: string): ThunkType =>
   async (dispatch) => {
-    const data = await profileAPI.updateStatus(status);
-    if (data.data.resultCode === ResultCodeEnum.Success) {
+    const { data } = await profileAPI.updateStatus(status);
+    if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(setUserStatus(status));
     }
   };
@@ -145,7 +143,7 @@ const setUserPhoto =
 const saveProfile =
   (profile: ProfileType): ThunkType =>
   async (dispatch, getState) => {
-    const userId = getState().auth.id;
+    const userId = getState().auth.id as number;
     const { data } = await profileAPI.updateProfile(profile);
     if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(getUserProfile(userId));
