@@ -40,7 +40,7 @@ class App extends React.Component<PropsFromRedux> {
                 <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
                 <Route path="/messages" render={() => <Dialogs />} />
                 <Route path="/users" render={() => <UsersContainer />} />
-                <Route render={() => <h1>404 NOT FOUND</h1>} />
+                <Redirect to="/profile" />
               </Switch>
             </div>
           </Suspense>
