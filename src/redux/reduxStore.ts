@@ -14,19 +14,12 @@ const rootReducer = combineReducers({
   app: appReducer,
 });
 
-type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>;
-export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U }
-  ? U
-  : never;
+export type AppStateType = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U } ? U : never;
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(ThunkMiddleware)));
 
-export type AppThunk<A extends Action, R = Promise<void>> = ThunkAction<
-  R,
-  AppStateType,
-  unknown,
-  A
->;
+export type AppThunk<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
 export default store;

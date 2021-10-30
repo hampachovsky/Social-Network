@@ -1,19 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Preloader from 'components/common/Preloader';
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from 'redux/reduxStore';
 import { FilterType, getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
-import Users from '.';
 import {
-  getUserFilter,
+  getUserFilterSelector,
   getUsersCurrentPageSelector,
   getUsersFollowingInProgressSelector,
   getUsersIsFetchingSelector,
   getUsersPageSizeSelector,
   getUsersSelector,
   getUsersTotalUsersCountSelector,
-} from '../../redux/usersSelector';
-
+} from '../redux/usersSelector';
+/*
 const UsersAPIComponent: React.FC<PropsFromRedux> = ({
   pageSize,
   currentPage,
@@ -23,9 +23,6 @@ const UsersAPIComponent: React.FC<PropsFromRedux> = ({
   filter,
   ...props
 }) => {
-  useEffect(() => {
-    requestUsers(currentPage, pageSize, filter);
-  }, []);
   const onPageChanged = (page: number) => {
     getCurrentPage(page, pageSize);
     requestUsers(page, pageSize, filter);
@@ -60,7 +57,7 @@ const mapStateToProps = (state: AppStateType) => {
     currentPage: getUsersCurrentPageSelector(state),
     isFetching: getUsersIsFetchingSelector(state),
     followingInProgress: getUsersFollowingInProgressSelector(state),
-    filter: getUserFilter(state),
+    filter: getUserFilterSelector(state),
   };
 };
 
@@ -72,3 +69,4 @@ const connector = connect(mapStateToProps, {
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 export default connector(UsersAPIComponent);
+*/
