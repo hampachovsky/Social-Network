@@ -1,6 +1,6 @@
 import React from 'react';
-import ChatContainer from './Chat/ChatContainer';
-import ChatListContainer from './ChatList/ChatListContainer';
+import Chat from './Chat';
+import { ChatList } from './ChatList';
 import style from './Dialogs.module.css';
 
 const Dialogs = () => {
@@ -11,8 +11,8 @@ const Dialogs = () => {
       </div>
       <div>
         <div className={style.chatContainer}>
-          <ChatListContainer />
-          <ChatContainer />
+          <ChatList />
+          <Chat />
         </div>
       </div>
     </div>

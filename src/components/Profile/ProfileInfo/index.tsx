@@ -41,11 +41,7 @@ const ProfileInfo: React.FC<PropsType> = ({
       )}
       <div className={style.profileContainer}>
         <div className={style.profileImageContainer}>
-          <img
-            className={style.profileImage}
-            src={profile.photos.large ? profile.photos.large : userPhoto}
-            alt=""
-          />
+          <img className={style.profileImage} src={profile.photos.large ? profile.photos.large : userPhoto} alt="" />
         </div>
         <div className={style.infoContainer}>
           {editMode ? (

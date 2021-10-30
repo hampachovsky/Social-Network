@@ -1,27 +1,20 @@
+import { useTypedSelector } from 'hooks/useTypedSelector';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { logout } from 'redux/authReducer';
+import { getUserProfile, getUserStatus } from 'redux/profileReducer';
 import style from './Header.module.css';
 
-type PropsType = {
-  id: number | null;
-  login: string | null;
-  isAuth: boolean;
-  getUserProfile: (id: number) => void;
-  getUserStatus: (id: number) => void;
-  logout: () => void;
-};
+export const Header: React.FC = () => {
+  const dispatch = useDispatch();
+  const isAuth = useTypedSelector((state) => state.auth.isAuth);
+  const login = useTypedSelector((state) => state.auth.login);
+  const id = useTypedSelector((state) => state.auth.id);
 
-const Header: React.FC<PropsType> = ({
-  isAuth,
-  login,
-  id,
-  getUserProfile,
-  getUserStatus,
-  logout,
-}) => {
   const onOpenProfile = () => {
-    getUserProfile(id as number);
-    getUserStatus(id as number);
+    dispatch(getUserProfile(id as number));
+    dispatch(getUserStatus(id as number));
   };
   return (
     <header className={style.header}>
@@ -31,7 +24,7 @@ const Header: React.FC<PropsType> = ({
             <NavLink onClick={onOpenProfile} className={style.login} to={`/profile/${id}`}>
               {login}
             </NavLink>
-            <NavLink onClick={() => logout()} className={style.logout} to={`/login`}>
+            <NavLink onClick={() => dispatch(logout())} className={style.logout} to={`/login`}>
               Logout
             </NavLink>
           </>

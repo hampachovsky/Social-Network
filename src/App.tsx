@@ -1,6 +1,6 @@
 import Preloader from 'components/common/Preloader';
-import HeaderContainer from 'components/Header/HeaderContainer';
-import Login from 'components/Login';
+import { Header } from 'components/Header';
+import { Login } from 'components/Login';
 import Navbar from 'components/Navbar/';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import React, { Suspense, useEffect } from 'react';
@@ -9,7 +9,7 @@ import { Redirect, Route, Switch } from 'react-router';
 import { initializeApp } from 'redux/appReducer';
 import './App.css';
 
-const ProfileContainer = React.lazy(() => import('components/Profile/ProfileContainer'));
+const Profile = React.lazy(() => import('components/Profile/'));
 const Users = React.lazy(() => import('components/Users'));
 const Dialogs = React.lazy(() => import('components/Dialogs'));
 
@@ -20,15 +20,15 @@ export function App() {
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, []);
+  }, [dispatch]);
 
-  if (initialized) {
+  if (!initialized) {
     return <Preloader />;
   }
-  if (isAuth) return <Login />;
+  if (!isAuth) return <Login />;
   return (
     <div className="app-wrapper">
-      <HeaderContainer />
+      <Header />
       <div className="wrap-whole">
         <Navbar />
         <Suspense fallback={<Preloader />}>
@@ -40,7 +40,7 @@ export function App() {
               <Route path="/login" exact>
                 <Redirect to="/profile" />
               </Route>
-              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+              <Route path="/profile/:userId?" render={() => <Profile />} />
               <Route path="/messages" render={() => <Dialogs />} />
               <Route path="/users" render={() => <Users />} />
               <Redirect to="/profile" />

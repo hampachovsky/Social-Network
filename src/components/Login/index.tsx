@@ -1,20 +1,15 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useTypedSelector } from 'hooks/useTypedSelector';
 import React, { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { login } from 'redux/authReducer';
-import { AppStateType } from 'redux/reduxStore';
 import * as yup from 'yup';
 import style from './Login.module.css';
 
 const validationScheme = yup.object().shape({
   email: yup.string().email('Enter correct email').required('Please enter email'),
   password: yup.string().min(8, '8 Char min').required('Please enter password'),
-  /* error: yup.boolean(),
-  captcha: yup.string().when('error', {
-    is: () => true,
-    then: yup.string().required('Please enter captcha'),
-  }),*/
 });
 
 type FormInitialValuesType = {
@@ -24,7 +19,7 @@ type FormInitialValuesType = {
   captcha: string;
 };
 
-const Login: React.FC<PropsFromRedux> = (props) => {
+export const Login: React.FC = () => {
   const [captcha, setCaptcha] = useState<string | null>(null);
   const initialValues: FormInitialValuesType = {
     email: '',
@@ -32,8 +27,10 @@ const Login: React.FC<PropsFromRedux> = (props) => {
     rememberMe: false,
     captcha: '',
   };
+  const isAuth = useTypedSelector((state) => state.auth.isAuth);
+  const dispatch = useDispatch();
 
-  if (props.isAuth) return <Redirect to="/profile " />;
+  if (isAuth) return <Redirect to="/profile " />;
   return (
     <div className={style.loginFormWrapper}>
       <Formik
@@ -42,7 +39,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
         validationSchema={validationScheme}
         onSubmit={async ({ email, password, rememberMe, captcha }, actions) => {
           try {
-            await props.login({ email, password, rememberMe, captcha });
+            await dispatch(login({ email, password, rememberMe, captcha }));
             actions.setSubmitting(false);
             actions.resetForm({
               values: {
@@ -121,15 +118,3 @@ const Login: React.FC<PropsFromRedux> = (props) => {
     </div>
   );
 };
-
-const mapStateToProps = (state: AppStateType) => {
-  return {
-    isAuth: state.auth.isAuth,
-  };
-};
-
-const connector = connect(mapStateToProps, { login });
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export default connector(Login);

@@ -1,14 +1,11 @@
+import { useTypedSelector } from 'hooks/useTypedSelector';
 import React, { useState } from 'react';
-import { DialogsUserType } from 'types/types';
 import style from './ChatList.module.css';
 import ListItem from './ListItem/index';
 
-type PropsType = {
-  userData: Array<DialogsUserType>;
-};
-
-const ChatList: React.FC<PropsType> = ({ userData }) => {
+export const ChatList: React.FC = () => {
   const [query, setQuery] = useState('');
+  const userData = useTypedSelector((state) => state.dialogsPage.userData);
   const listElement = userData.map((u) => (
     <ListItem key={u.userId} userId={u.userId} username={u.username} photoUrl={u.photoUrl} />
   ));
@@ -29,5 +26,3 @@ const ChatList: React.FC<PropsType> = ({ userData }) => {
     </div>
   );
 };
-
-export default ChatList;

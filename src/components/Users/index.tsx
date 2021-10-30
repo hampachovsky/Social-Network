@@ -29,7 +29,8 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     dispatch(requestUsers(currentPage, pageSize, filter));
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const onFilterChanged = async (filter: FilterType) => {
     await dispatch(requestUsers(currentPage, pageSize, filter));

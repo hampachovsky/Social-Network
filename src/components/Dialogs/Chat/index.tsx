@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useTypedSelector } from 'hooks/useTypedSelector';
 import React from 'react';
-import { DialogsUserType, MessagesType } from 'types/types';
+import { useDispatch } from 'react-redux';
+import { actions as dialogsActions } from 'redux/dialogsReducer';
 import * as yup from 'yup';
 import style from './Chat.module.css';
 import Message from './Message/index';
@@ -9,20 +11,18 @@ const validationSchema = yup.object().shape({
   messageBody: yup.string().max(300, 'Max char 300'),
 });
 
-type PropsType = {
-  messages: Array<MessagesType>;
-  userData: Array<DialogsUserType>;
-  sendMessage: (newMessageBody: string) => void;
-};
-
 type FormInitialValuesType = {
   messageBody: string;
 };
 
-const Chat: React.FC<PropsType> = ({ messages, userData, sendMessage }) => {
+const Chat: React.FC = () => {
   const initialValues: FormInitialValuesType = {
     messageBody: '',
   };
+  const messages = useTypedSelector((state) => state.dialogsPage.messages);
+  const userData = useTypedSelector((state) => state.dialogsPage.userData);
+  const dispatch = useDispatch();
+
   const filtred = messages.filter((m) => m.author === 'user1');
   const messageElement = filtred.map((m, i) => (
     <Message message={m.content} owner={m.owner} photoUrl={userData[0].photoUrl} key={i} />
@@ -47,7 +47,7 @@ const Chat: React.FC<PropsType> = ({ messages, userData, sendMessage }) => {
           initialValues={initialValues}
           onSubmit={(values, actions) => {
             actions.validateForm(values.messageBody);
-            sendMessage(values.messageBody);
+            dispatch(dialogsActions.sendMessage(values.messageBody));
             actions.setSubmitting(false);
             actions.setValues({ messageBody: '' });
           }}
@@ -55,7 +55,7 @@ const Chat: React.FC<PropsType> = ({ messages, userData, sendMessage }) => {
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ values, touched, errors, dirty, isValid, handleChange, handleSubmit }) => (
+          {({ values, dirty, isValid, handleChange, handleSubmit }) => (
             <Form onSubmit={handleSubmit} className={style.chatFooter}>
               <Field
                 onChange={handleChange}
