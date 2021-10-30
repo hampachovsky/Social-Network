@@ -1,34 +1,49 @@
-import { Formik, Form, Field } from 'formik';
-import React from 'react';
-import { FilterType } from 'redux/usersReducer';
-import { UserType } from 'types/types';
+import Preloader from 'components/common/Preloader';
+import { Field, Form, Formik } from 'formik';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { FilterType, getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
+import {
+  getUserFilterSelector,
+  getUsersCurrentPageSelector,
+  getUsersFollowingInProgressSelector,
+  getUsersIsFetchingSelector,
+  getUsersPageSizeSelector,
+  getUsersSelector,
+  getUsersTotalUsersCountSelector,
+} from 'redux/usersSelector';
 import Paginator from '../common/Paginator/Paginator';
 import User from './User';
 import style from './Users.module.css';
 
-type PropsType = {
-  totalUsersCount: number;
-  followingInProgress: Array<number>;
-  pageSize: number;
-  currentPage: number;
-  users: Array<UserType>;
-  toggleFollowedStatus: (followed: boolean, id: number) => void;
-  onPageChanged: (page: number) => void;
-  onFilterChanged: (filter: FilterType) => void;
-  filter: FilterType;
-};
+const Users: React.FC = () => {
+  const users = useTypedSelector(getUsersSelector);
+  const followingInProgress = useTypedSelector(getUsersFollowingInProgressSelector);
+  const totalUsersCount = useTypedSelector(getUsersTotalUsersCountSelector);
+  const pageSize = useTypedSelector(getUsersPageSizeSelector);
+  const currentPage = useTypedSelector(getUsersCurrentPageSelector);
+  const filter = useTypedSelector(getUserFilterSelector);
+  const isFetching = useTypedSelector(getUsersIsFetchingSelector);
+  const dispatch = useDispatch();
 
-const Users: React.FC<PropsType> = ({
-  users,
-  toggleFollowedStatus,
-  followingInProgress,
-  totalUsersCount,
-  pageSize,
-  currentPage,
-  onPageChanged,
-  onFilterChanged,
-  filter,
-}) => {
+  useEffect(() => {
+    dispatch(requestUsers(currentPage, pageSize, filter));
+  }, []);
+
+  const onFilterChanged = async (filter: FilterType) => {
+    await dispatch(requestUsers(currentPage, pageSize, filter));
+  };
+
+  const onPageChanged = (page: number) => {
+    dispatch(getCurrentPage(page, pageSize));
+    dispatch(requestUsers(page, pageSize, filter));
+  };
+
+  const onToggleFollowedStatus = (followed: boolean, id: number) => {
+    dispatch(toggleFollowedStatus(followed, id));
+  };
+  if (isFetching) return <Preloader />;
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Users</h1>
@@ -38,7 +53,7 @@ const Users: React.FC<PropsType> = ({
           <User
             user={u}
             key={u.id}
-            toggleFollowedStatus={toggleFollowedStatus}
+            toggleFollowedStatus={onToggleFollowedStatus}
             followingInProgress={followingInProgress}
           />
         ))}
