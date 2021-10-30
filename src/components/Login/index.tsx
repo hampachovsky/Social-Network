@@ -61,16 +61,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
           }
         }}
       >
-        {({
-          values,
-          dirty,
-          isValid,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          status,
-        }) => (
+        {({ values, dirty, isValid, isSubmitting, handleChange, handleBlur, handleSubmit, status }) => (
           <Form onSubmit={handleSubmit} className={style.loginFormConainer}>
             <h1>Log in</h1>
             <p>Email and password</p>
@@ -121,11 +112,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
               </div>
             ) : null}
 
-            <button
-              disabled={(!dirty && isValid) || isSubmitting}
-              type={`submit`}
-              className={style.loginBtn}
-            >
+            <button disabled={(!dirty && isValid) || isSubmitting} type={`submit`} className={style.loginBtn}>
               Login
             </button>
           </Form>

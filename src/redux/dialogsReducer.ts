@@ -1,3 +1,4 @@
+import { InferActionsTypes } from './reduxStore';
 import { DialogsUserType, MessagesType } from 'types/types';
 
 const SEND_MESSAGE = 'dialogs/SEND-MESSAGE';
@@ -133,7 +134,7 @@ const initialState = {
 };
 
 export type InitialStateType = typeof initialState;
-type ActionsType = SendMessageActionType;
+type ActionsType = InferActionsTypes<typeof actions>;
 
 const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
@@ -159,24 +160,15 @@ const dialogsReducer = (state = initialState, action: ActionsType): InitialState
   }
 };
 
-type SendMessagePayloadType = {
-  id: string;
-  newMessageBody: string;
+export const actions = {
+  sendMessage: (newMessageBody: string) =>
+    ({
+      type: SEND_MESSAGE,
+      payload: {
+        id: '1',
+        newMessageBody,
+      },
+    } as const),
 };
-
-type SendMessageActionType = {
-  type: typeof SEND_MESSAGE;
-  payload: SendMessagePayloadType;
-};
-
-const sendMessage = (newMessageBody: string): SendMessageActionType => ({
-  type: SEND_MESSAGE,
-  payload: {
-    id: '1',
-    newMessageBody,
-  },
-});
-
-export { sendMessage };
 
 export default dialogsReducer;

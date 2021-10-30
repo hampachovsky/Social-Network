@@ -2,9 +2,10 @@ import Preloader from 'components/common/Preloader';
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from 'redux/reduxStore';
-import { getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
+import { FilterType, getCurrentPage, requestUsers, toggleFollowedStatus } from 'redux/usersReducer';
 import Users from '.';
 import {
+  getUserFilter,
   getUsersCurrentPageSelector,
   getUsersFollowingInProgressSelector,
   getUsersIsFetchingSelector,
@@ -19,13 +20,19 @@ const UsersAPIComponent: React.FC<PropsFromRedux> = ({
   requestUsers,
   getCurrentPage,
   isFetching,
+  filter,
   ...props
 }) => {
   useEffect(() => {
-    requestUsers(currentPage, pageSize);
+    requestUsers(currentPage, pageSize, filter);
   }, []);
   const onPageChanged = (page: number) => {
     getCurrentPage(page, pageSize);
+    requestUsers(page, pageSize, filter);
+  };
+
+  const onFilterChanged = async (filter: FilterType) => {
+    await requestUsers(currentPage, pageSize, filter);
   };
   return (
     <>
@@ -38,38 +45,13 @@ const UsersAPIComponent: React.FC<PropsFromRedux> = ({
         users={props.users}
         followingInProgress={props.followingInProgress}
         toggleFollowedStatus={props.toggleFollowedStatus}
+        onFilterChanged={onFilterChanged}
+        filter={filter}
       />
     </>
   );
 };
-/*
-class UsersAPIComponent extends React.Component<PropsFromRedux> {
-  componentDidMount() {
-    this.props.requestUsers(this.props.currentPage, this.props.pageSize);
-  }
 
-  onPageChanged = (page: number) => {
-    this.props.getCurrentPage(page, this.props.pageSize);
-  };
-
-  render() {
-    return (
-      <>
-        {this.props.isFetching ? <Preloader /> : null}
-        <Users
-          totalUsersCount={this.props.totalUsersCount}
-          pageSize={this.props.pageSize}
-          currentPage={this.props.currentPage}
-          onPageChanged={this.onPageChanged}
-          users={this.props.users}
-          followingInProgress={this.props.followingInProgress}
-          toggleFollowedStatus={this.props.toggleFollowedStatus}
-        />
-      </>
-    );
-  }
-}
-*/
 const mapStateToProps = (state: AppStateType) => {
   return {
     users: getUsersSelector(state),
@@ -78,6 +60,7 @@ const mapStateToProps = (state: AppStateType) => {
     currentPage: getUsersCurrentPageSelector(state),
     isFetching: getUsersIsFetchingSelector(state),
     followingInProgress: getUsersFollowingInProgressSelector(state),
+    filter: getUserFilter(state),
   };
 };
 

@@ -9,9 +9,11 @@ type UsersResponseType = {
 };
 
 const usersAPI = {
-  getUsers(page = 1, pageSize = 4) {
+  getUsers(page = 1, pageSize = 4, term = '', friend: null | boolean) {
     return instance
-      .get<UsersResponseType>(`users?page=${page}&count=${pageSize}`)
+      .get<UsersResponseType>(
+        `users?page=${page}&count=${pageSize}&term=${term}` + (friend !== null ? `&friend=${friend}` : '')
+      )
       .then((response) => response.data);
   },
   follow(id: number) {

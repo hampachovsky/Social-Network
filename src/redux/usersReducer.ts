@@ -9,6 +9,7 @@ const SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT';
 const TOGGLE_FETCHING = 'users/TOGGLE_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGGRES = 'users/TOGGLE_IS_FOLLOWING_PROGGRES';
+const SET_FILTER = 'users/SET_FILTER';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -16,11 +17,15 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
-  followingInProgress: [] as Array<number>, // users id
+  followingInProgress: [] as Array<number>,
+  filter: {
+    term: '',
+    friend: null as null | boolean,
+  }, // users id
 };
 
 export type InitialStateType = typeof initialState;
-
+export type FilterType = typeof initialState.filter;
 type ActionsType = InferActionsTypes<typeof actions>;
 type ThunkType = AppThunk<ActionsType>;
 
@@ -46,6 +51,9 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
     }
     case TOGGLE_FETCHING: {
       return { ...state, isFetching: !state.isFetching };
+    }
+    case SET_FILTER: {
+      return { ...state, filter: action.payload };
     }
     case TOGGLE_IS_FOLLOWING_PROGGRES: {
       return {
@@ -80,13 +88,20 @@ export const actions = {
       isFetching,
       id,
     } as const),
+  setFilter: (filter: FilterType) =>
+    ({
+      type: SET_FILTER,
+      payload: filter,
+    } as const),
 };
 
 const requestUsers =
-  (currentPage: number, pageSize: number): ThunkType =>
+  (currentPage: number, pageSize: number, filter: FilterType): ThunkType =>
   async (dispatch) => {
     dispatch(actions.toggleFetching());
-    const data = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(actions.setFilter(filter));
+    dispatch(actions.setCurrentPage(currentPage));
+    const data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend);
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalUsersCount(data.totalCount));
     dispatch(actions.toggleFetching());
@@ -94,10 +109,11 @@ const requestUsers =
 
 const getCurrentPage =
   (page: number, pageSize: number): ThunkType =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
+    const filter = getState().usersPage.filter;
     dispatch(actions.setCurrentPage(page));
     dispatch(actions.toggleFetching());
-    const data = await usersAPI.getUsers(page, pageSize);
+    const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend);
     dispatch(actions.toggleFetching());
     dispatch(actions.setUsers(data.items));
   };

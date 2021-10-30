@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { sendMessage } from 'redux/dialogsReducer';
+import { actions } from 'redux/dialogsReducer';
 import { AppStateType } from 'redux/reduxStore';
 import Chat from '.';
 
@@ -10,4 +10,4 @@ const mapStateToProps = (state: AppStateType) => {
   };
 };
 
-export default connect(mapStateToProps, { sendMessage })(Chat);
+export default connect(mapStateToProps, { ...actions })(Chat);
