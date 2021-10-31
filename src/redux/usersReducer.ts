@@ -21,7 +21,7 @@ const initialState = {
   filter: {
     term: '',
     friend: null as null | boolean,
-  }, // users id
+  },
 };
 
 export type InitialStateType = typeof initialState;

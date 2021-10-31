@@ -24,6 +24,11 @@ const Navbar: React.FC = () => {
             Users
           </NavLink>
         </div>
+        <div>
+          <NavLink activeClassName={style.activeLink} className={style.item} to="/chat">
+            Chat
+          </NavLink>
+        </div>
       </nav>
     </div>
   );

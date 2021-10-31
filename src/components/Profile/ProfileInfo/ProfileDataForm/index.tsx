@@ -39,7 +39,7 @@ const ProfileDataForm: React.FC<PropsType> = ({
   setUserPhoto,
   saveProfile,
 }) => {
-  const [newPhotoFile, setPhotoFile] = useState<any>();
+  const [newPhotoFile, setPhotoFile] = useState<File>();
 
   const initialValues: FormInitialValuesType = {
     ...profile,
@@ -103,22 +103,13 @@ const ProfileDataForm: React.FC<PropsType> = ({
                 checked={values.lookingForAJob}
               />
               <label htmlFor="lookingForAJobDescription">Skills: </label>
-              <Field
-                type="text"
-                name="lookingForAJobDescription"
-                className={style.lookingForAJobDescription}
-              />
+              <Field type="text" name="lookingForAJobDescription" className={style.lookingForAJobDescription} />
             </div>
             {status && <p className={style.error}>{status}</p>}
 
             <ContactFields contacts={profile.contacts} />
             <div className={style.photoUploadConainer}>
-              <input
-                type="file"
-                name="photos.large"
-                className={style.fileInput}
-                onChange={onMainFotoSelected}
-              />
+              <input type="file" name="photos.large" className={style.fileInput} onChange={onMainFotoSelected} />
             </div>
             <div className={style.saveBtnContainer}>
               <button disabled={!isValid || isSubmitting} type="submit" className={style.saveBtn}>

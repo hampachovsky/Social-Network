@@ -1,0 +1,79 @@
+.message {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.messageText {
+  color: rgb(55, 65, 81);
+  background-color: rgb(243, 244, 246);
+  position: relative;
+
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+.avaContainer {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  padding: 10px;
+}
+
+.avaImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.leading {
+  max-width: 500px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  margin: 0;
+  line-height: 1.5rem;
+  font-size: 15px;
+}
+
+.ownerMessage {
+  display: flex;
+  justify-items: right;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 10px;
+}
+.ownerMessageText {
+  position: relative;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 100%;
+  border-radius: 0.25rem;
+  background-color: rgb(37, 99, 235);
+  color: rgb(255, 255, 255);
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+.avaOwnerContainer {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  padding: 10px;
+}
+
+.avaOwnerImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+}

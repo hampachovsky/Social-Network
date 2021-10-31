@@ -12,6 +12,7 @@ import './App.css';
 const Profile = React.lazy(() => import('components/Profile/'));
 const Users = React.lazy(() => import('components/Users'));
 const Dialogs = React.lazy(() => import('components/Dialogs'));
+const ChatPage = React.lazy(() => import('pages/ChatPage'));
 
 export function App() {
   const initialized = useTypedSelector((state) => state.app.initialized);
@@ -43,6 +44,7 @@ export function App() {
               <Route path="/profile/:userId?" render={() => <Profile />} />
               <Route path="/messages" render={() => <Dialogs />} />
               <Route path="/users" render={() => <Users />} />
+              <Route path="/chat" render={() => <ChatPage />} />
               <Redirect to="/profile" />
             </Switch>
           </div>
